@@ -148,3 +148,10 @@ h1.phoodeez_funnel{
   border-color: #a43a32 !important;
 }
 
+ /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+        .phoodeez-brand p{
+          display: none;
+        }
+    }
+
