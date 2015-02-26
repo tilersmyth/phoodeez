@@ -1,9 +1,94 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<script src="js/phoodeez.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phoodeez</title>
+<link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-i am a html doc! yay!
-</body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-phoodeez navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand phoodeez-brand" href="#">Phoodeez
+          	<p>Good Food @ Work</p>
+          </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav pull-right navbar-nav-phoodeez">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#signin">Sign in</a></li>
+            <li><a class="cart_dropdown" href="#cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container-fluid">
+    	<h1 class="phoodeez_funnel">Hello, what are you ordering for?</h1>
+     		<div class="row cat_row">
+     		   		<div class="col-xs-2 col-xs-offset-1">
+     		   			<a href="#"> 
+     		   				<div class="thumbnail option-thumb">
+
+     		   				</div>
+     		   				<p>Corporate Meeting</p>	
+     		   			</a>
+     		   		</div>
+     		   		<div class="col-xs-2">
+     		   			<a href="#"> 
+     		   				<div class="thumbnail option-thumb">
+     		   				
+     		   				</div>
+     		   				<p>Office Lunch</p>	
+     		   			</a>
+     		   		</div>
+     		   		<div class="col-xs-2">
+     		   			<a href="#"> 
+     		   				<div class="thumbnail option-thumb">
+     		   				
+     		   				</div>
+     		   				<p>School Group Meeting</p>	
+     		   			</a>
+     		   		</div>
+     		   		<div class="col-xs-2">
+     		   			<a href="#"> 
+     		   				<div class="thumbnail option-thumb">
+     		   				
+     		   				</div>
+     		   				<p>Office Party</p>	
+     		   			</a>
+     		   		</div>
+     		   		<div class="col-xs-2">
+     		   			<a href="#"> 
+     		   				<div class="thumbnail option-thumb">
+     		   				
+     		   				</div>
+     		   				<p>Easter Celebration</p>	
+     		   			</a>
+     		   		</div>
+     	</div><!-- .cat_row -->	
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        About | Contact | Feedback | Jobs | Privacy Policy
+      </div>
+   </footer>
+
+ </body>
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </html>

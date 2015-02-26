@@ -1,3 +1,113 @@
-body {
-background: url('../img/bob.jpg') no-repeat 100% 100%;
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
 }
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+  background: 
+    linear-gradient(
+      rgba(211, 71, 61, 0.98), 
+      rgba(211, 71, 61, 0.98)
+    ),
+    url(../img/body_background.png);
+  background-size: 100%;
+
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+body > .container, body > .container-fluid {
+  padding: 60px 15px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+  color: #a43a32;
+  text-align: center;
+}
+
+
+/*Navbar
+-------------------------------------------------- */
+a.phoodeez-brand{
+  font-family: 'Crete Round', serif;
+  font-size: 30px;
+  color: #d0483e !important;
+}
+
+a.phoodeez-brand p{
+  font-size: 12px;
+  text-align: center;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin:3px 0 0 0;
+}
+
+.navbar-phoodeez{
+  background-color: #ecf0f1;
+}
+
+.navbar-nav-phoodeez li a{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar-phoodeez li a.cart_dropdown{
+  padding-top: 17px;
+  padding-bottom: 17px;
+  font-size: 25px;
+}
+
+/*Home Content
+-------------------------------------------------- */
+h1.phoodeez_funnel{
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  margin-top: 70px;
+}
+
+.cat_row{
+  margin-top: 80px;
+}
+
+.cat_row a{
+  display: block;
+  color: #ffffff;
+}
+
+.cat_row a:hover{
+  text-decoration: none;
+}
+
+.cat_row p{
+  text-align: center;
+  font-size: 18px;
+  font-weight: 200;
+}
+
+.option-thumb{
+  background: none;
+  height: 200px;
+  margin-bottom: 8px;
+}
+
+.option-thumb:hover, .option-thumb:focus{
+  border-color: #a43a32 !important;
+}
+
