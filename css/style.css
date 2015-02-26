@@ -100,12 +100,51 @@ h1.phoodeez_funnel{
 }
 
 .option-thumb{
-  background: none;
   height: 200px;
-  margin-bottom: 8px;
+  margin-bottom: 8px; 
 }
 
-.option-thumb:hover, .option-thumb:focus{
+.option_meeting{
+  background: url(../img/cat_pics/meeting1.svg) no-repeat;
+  background-position: center;
+  background-size:90% 90%;
+  -o-background-size: 90% 90%;
+  -webkit-background-size: 90% 90%;
+}
+
+.option_office{
+  background: url(../img/cat_pics/man332.svg) no-repeat;
+  background-position: center;
+  background-size:90% 90%;
+  -o-background-size: 90% 90%;
+  -webkit-background-size: 90% 90%;
+}
+
+.option_class{
+  background: url(../img/cat_pics/class6.svg) no-repeat;
+  background-position: center;
+  background-size:90% 90%;
+  -o-background-size: 90% 90%;
+  -webkit-background-size: 90% 90%;
+}
+
+.option_party{
+  background: url(../img/cat_pics/man204.svg) no-repeat;
+  background-position: center;
+  background-size:90% 90%;
+  -o-background-size: 90% 90%;
+  -webkit-background-size: 90% 90%;
+}
+
+.option_wildcard{
+  background: url(../img/cat_pics/easteregg.svg) no-repeat;
+  background-position: center;
+  background-size:90% 90%;
+  -o-background-size: 90% 90%;
+  -webkit-background-size: 90% 90%;
+}
+
+.cat_row a:hover .option-thumb, .cat_row a:focus .option-thumb{
   border-color: #a43a32 !important;
 }
 
