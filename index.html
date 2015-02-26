@@ -29,7 +29,12 @@
           <ul class="nav navbar-nav pull-right navbar-nav-phoodeez">
             <li><a href="#services">Services</a></li>
             <li><a href="#signin">Sign in</a></li>
-            <li><a class="cart_dropdown" href="#cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+            <li class="dropdown" id="cart-dropdown">
+              <a href="#" class="dropdown-toggle cart_dropdown" id="cart_dropdown_btn" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-cart" role="menu">
+                	<div class="empty_cart"><p><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></p>Your cart is empty.</div>
+              </div>
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -37,9 +42,11 @@
 
     <!-- Begin page content -->
     <div class="container-fluid">
-    	<h1 class="phoodeez_funnel">Hello, what are you ordering for?</h1>
-     		<div class="row cat_row">
-     		   		<div class="col-sm-2 col-sm-offset-1">
+    	<div class="row">
+    	<div id="option_wrapper">
+    		<h1 class="phoodeez_funnel">Hello, what are you ordering for?</h1>
+     			<div class="row cat_row">
+     		   		<div class="col-sm-2 col-sm-offset-1 option_item">
      		   			<a href="#"> 
      		   				<div class="thumbnail option-thumb option_meeting">
 
@@ -47,7 +54,7 @@
      		   				<p>Corporate Meeting</p>	
      		   			</a>
      		   		</div>
-     		   		<div class="col-sm-2">
+     		   		<div class="col-sm-2 option_item">
      		   			<a href="#"> 
      		   				<div class="thumbnail option-thumb option_office">
      		   				
@@ -55,7 +62,7 @@
      		   				<p>Office Lunch</p>	
      		   			</a>
      		   		</div>
-     		   		<div class="col-sm-2">
+     		   		<div class="col-sm-2 option_item">
      		   			<a href="#"> 
      		   				<div class="thumbnail option-thumb option_class">
      		   				
@@ -63,7 +70,7 @@
      		   				<p>School Group Meeting</p>	
      		   			</a>
      		   		</div>
-     		   		<div class="col-sm-2">
+     		   		<div class="col-sm-2 option_item">
      		   			<a href="#"> 
      		   				<div class="thumbnail option-thumb option_party">
      		   				
@@ -71,7 +78,7 @@
      		   				<p>Office Party</p>	
      		   			</a>
      		   		</div>
-     		   		<div class="col-sm-2">
+     		   		<div class="col-sm-2 option_item">
      		   			<a href="#"> 
      		   				<div class="thumbnail option-thumb option_wildcard">
      		   				
@@ -79,7 +86,12 @@
      		   				<p>Easter Celebration</p>	
      		   			</a>
      		   		</div>
-     	</div><!-- .cat_row -->	
+     	    </div><!-- .cat_row -->	
+     	  </div>
+     	  <div id="cart_dropdown_buffer">
+
+     	  </div>
+     	</div>
     </div>
 
     <footer class="footer">
@@ -91,4 +103,5 @@
  </body>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/phoodeez.js"></script>
 </html>

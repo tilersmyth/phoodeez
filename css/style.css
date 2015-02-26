@@ -65,9 +65,30 @@ a.phoodeez-brand p{
 }
 
 .navbar-phoodeez li a.cart_dropdown{
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding-top: 19px;
+  padding-bottom: 18px;
   font-size: 25px;
+}
+
+.navbar-nav-phoodeez>.open>a{
+  color: #d0483e !important;
+}
+
+.dropdown-cart{
+  background-color: #e7e7e7;
+  border:none !important;
+  border-radius: 0px !important;
+  min-width: 360px;
+  padding-top:20px;
+  padding-bottom: 20px; 
+}
+
+.empty_cart{
+  text-align:center;
+}
+
+.empty_cart p{
+  font-size: 20px;
 }
 
 /*Home Content
@@ -82,6 +103,7 @@ h1.phoodeez_funnel{
 
 .cat_row{
   margin-top: 80px;
+
 }
 
 .cat_row a{
@@ -97,6 +119,10 @@ h1.phoodeez_funnel{
   text-align: center;
   font-size: 18px;
   font-weight: 200;
+}
+
+.option_item{
+  min-width:215px!important
 }
 
 .option-thumb{
