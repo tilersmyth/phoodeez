@@ -23,12 +23,17 @@ body {
   height: 40px;
 }
 
+.footer a, .footer a:hover{
+  color: #a43a32;
+  text-decoration: none;
+}
+
 
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-body > .container, body > .container-fluid {
+body .main-wrapper {
   padding: 60px 15px 0;
 }
 
@@ -91,7 +96,7 @@ a.phoodeez-brand p{
   font-size: 20px;
 }
 
-/*Home Content
+/*Main Content
 -------------------------------------------------- */
 h1.phoodeez_funnel{
   text-align: center;

@@ -39,21 +39,7 @@ app.controller("Main", function($scope, $firebase) {
     //$scope.items = sync.$asArray();
 });
 
-
-//dropdown tylerstyle
-//$(document).ready(function() {
-	//$('#cart-dropdown').on('show.bs.dropdown', function () {
-  			//$( "#option_wrapper" ).addClass( "col-sm-8" );
-  			//$( "#cart_dropdown_buffer" ).addClass( "col-sm-4" );
-	//}) <-Terminate me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (semicolon)
-
-	//$('#cart-dropdown').on('hide.bs.dropdown', function () {
-  			//$( "#option_wrapper" ).removeClass( "col-sm-8" );
-  			//$( "#cart_dropdown_buffer" ).removeClass( "col-sm-4" );
-	//}) <-Terminate me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! (semicolon)
-
-//});
-
+//remove markup on homepage - will save for menu item pages
 //dropdown samstyle
 $(document).ready(function() {
     var theShift = function() {$("#option_wrapper").toggleClass("col-sm-8").next("#cart_dropdown_buffer").toggleClass("col-sm-4")};
