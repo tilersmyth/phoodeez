@@ -133,6 +133,7 @@ h1.phoodeez_funnel{
 .option-thumb{
   height: 200px;
   margin-bottom: 8px;
+  padding: 20px;
 }
 
 .option_meeting{
@@ -173,7 +174,6 @@ h1.phoodeez_funnel{
 .cat_row a:hover .option-thumb, .cat_row a:focus .option-thumb{
   border-color: #a43a32 !important;
 }
-
 
 
 /*Phoodeez styled modal
