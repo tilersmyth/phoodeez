@@ -194,6 +194,7 @@ h1.phoodeez_funnel{
 
 .phoodeez-login{
   width:100%;
+  outline: none !important;
 }
 
 .login-modal-body{
@@ -220,6 +221,18 @@ h1.phoodeez_funnel{
   margin: 0px 0 25px 0;
 }
 
+.create_name_form input{
+  padding: 6px 8px;
+}
+
+.create_email_form, .create_pw2_form{
+  margin-top: 20px;
+}
+
+.login_back{
+  line-height:3em;
+}
+
 /*Responsive Layouts
 -------------------------------------------------- */
 
@@ -233,7 +246,7 @@ h1.phoodeez_funnel{
   @media(min-width:992px){
 
   .login .modal-dialog {
-   width: 450px;
+   width: 400px;
   }
 
   }

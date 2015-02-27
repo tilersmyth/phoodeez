@@ -4,26 +4,50 @@
         <h4 class="modal-title login-title">Sign in</h4>
     </div>
     <div class="modal-body login-modal-body">
-        	<form>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+     <form ng-show="!signupbox">
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">Email address</label>
+		    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputPassword1">Password</label>
+		    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+		  </div>
+		  <div class="checkbox">
+		    <label>
+		      <input type="checkbox"> Remember me
+		    </label>
+		  </div>
+		  <button class="btn btn-primary phoodeez-login">Sign in</button>
+	</form>
+
+	<form ng-show="signupbox">
+	<label for="firstName">Name</label>
+	<div class="form-inline create_name_form">
+			<div class="form-group">
+		    	<input type="text" class="form-control" id="firstName" placeholder="First Name">
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control" placeholder="Last Name">
+		  </div>
+	</div>
+	<div class="form-group create_email_form">
+		    <label for="createEmail">Email address</label>
+		    <input type="email" class="form-control" id="createEmail" placeholder="Enter email">
+	</div>
+	<div class="form-group">
+    <label for="createPw">Create Password</label>
+    <input type="password" class="form-control" id="createPw" placeholder="Password">
+    <input type="password" class="form-control create_pw2_form" placeholder="Confirm Password">
   </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Remember me
-    </label>
-  </div>
-  <button class="btn btn-primary phoodeez-login">Sign in</button>
-</form>
-<div class="login_span_cont"><span class="login_span">OR</span></div>
+
+	</form>
+<div class="login_span_cont" ng-show="!signupbox"><span class="login_span">OR</span></div>
 <hr class="login_seperator">    
 
-<button class="btn btn-danger phoodeez-login" ng-click="cancel()">Create Account</button>  
+	<button class="btn phoodeez-login" ng-class="{ 'btn-primary': signupbox , 'btn-danger': !signupbox}"	 ng-click="signupbox=true; $event.preventDefault();">Create Account</button> 
+
+	<span class="login_back" ng-show="signupbox"><a href="#" ng-click="signupbox=false; $event.preventDefault();"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to Sign in</a></span> 
     </div>
  
        
