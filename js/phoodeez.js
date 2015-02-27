@@ -1,4 +1,4 @@
-var app = angular.module("tpa", ["firebase",'ui.router']);
+var app = angular.module("tpa", ["firebase",'ui.router',"ui.bootstrap"]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
@@ -30,13 +30,40 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
-app.controller("Main", function($scope, $firebase) {
+app.controller("Main", function($scope, $firebase, $firebaseAuth, $modal) {
     ///////////////////////////////////////////////////////////////////////
     //////////////////////STICK TO ONE CONTROLLER!!!!//////////////////////
     ///////////////////////////////////////////////////////////////////////
     //var ref = new Firebase("https://phoodeez.firebaseio.com/");
     //var sync = $firebase(ref.child('products'));
     //$scope.items = sync.$asArray();
+
+    $scope.open = function (modal) {
+    	$modal.open({
+	    	templateUrl: modal,
+	        controller: modal,
+	        backdrop: 'static',
+	        windowClass: modal,
+	        resolve: {
+	          items: function () {
+	          	return {
+		                user: $scope.loggedIn,
+		                job: ""
+		            }
+		         }
+		     }
+       });
+    };
+    
+});
+
+app.controller('login', function ($scope, $modalInstance, $rootScope) {
+    $scope.save = function (a,b,c) {
+        $modalInstance.dismiss('cancel');
+    };
+   	$scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+	};
 });
 
 //remove markup on homepage - will save for menu item pages
