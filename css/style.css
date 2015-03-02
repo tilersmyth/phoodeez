@@ -1,3 +1,5 @@
+[ng\:cloak], [ng-cloak], .ng-cloak { display: none; }
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -33,7 +35,7 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 
-body .main-wrapper {
+body > .container-fluid{
   padding: 60px 15px 0;
 }
 
@@ -106,6 +108,16 @@ h1.phoodeez_funnel{
   margin-top: 70px;
 }
 
+h1.phoodeez_funnel a{
+  text-shadow: none;
+  color: #a43a32;
+}
+
+h1.phoodeez_funnel a span{
+  line-height: 43px;
+  vertical-align: bottom;
+}
+
 .cat_row{
   margin-top: 80px;
 
@@ -134,45 +146,40 @@ h1.phoodeez_funnel{
   height: 200px;
   margin-bottom: 8px;
   padding: 20px;
-}
-
-.option_meeting{
-  background: url('../img/cat_pics/meeting1.svg') no-repeat center;
   background-size:90% 90%;
   -o-background-size: 90% 90%;
   -webkit-background-size: 90% 90%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.option_office{
-  background: url('../img/cat_pics/man332.svg') no-repeat center;
-  background-size:90% 90%;
-  -o-background-size: 90% 90%;
-  -webkit-background-size: 90% 90%;
-}
-
-.option_class{
-  background: url('../img/cat_pics/class6.svg') no-repeat center;
-  background-size:90% 90%;
-  -o-background-size: 90% 90%;
-  -webkit-background-size: 90% 90%;
-}
-
-.option_party{
-  background: url('../img/cat_pics/man204.svg') no-repeat center;
-  background-size:90% 90%;
-  -o-background-size: 90% 90%;
-  -webkit-background-size: 90% 90%;
-}
-
-.option_wildcard{
-  background: url('../img/cat_pics/easteregg.svg') no-repeat center;
-  background-size:90% 90%;
-  -o-background-size: 90% 90%;
-  -webkit-background-size: 90% 90%;
+.suboption-thumb{
+  height: 200px;
+  margin-bottom: 8px;
+  padding: 20px;
+  background-size:100% 100%;
+  -o-background-size: 100% 100%;
+  -webkit-background-size: 100% 100%;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .cat_row a:hover .option-thumb, .cat_row a:focus .option-thumb{
   border-color: #a43a32 !important;
+}
+
+.package_title{
+  background: rgba(0, 0, 0, .7);
+  position: absolute; 
+  bottom:0;
+  left: 0;
+  width: 100%;
+  text-align:center;
+  padding:20px 0;
 }
 
 
@@ -250,3 +257,4 @@ h1.phoodeez_funnel{
   }
 
   }
+

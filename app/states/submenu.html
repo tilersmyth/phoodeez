@@ -1,0 +1,69 @@
+    <h1 class="phoodeez_funnel">
+ 		<a ui-sref="home"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a> 
+ 		<span ng-show="catInfo.info.title">Recommendations for {{catInfo.info.title}}</span>
+    </h1>
+    <div class="row cat_row">
+        <div ng-repeat="subpackages in catInfo.subpackages">
+            <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
+                <a href="#">
+                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url(img/items/{{subpackages.img}})'}">
+                    <div class="package_title">{{subpackages.Name}}</div>
+                    </div>
+                    <p>{{subpackages.Vendor}}</p>
+                </a>
+            </div>
+     </div><!-- ng_repeat -->
+    </div><!-- .cat_row -->
+
+<!-- 
+
+
+
+
+
+
+
+
+
+            <div class="row cat_row">
+                <div class="col-sm-2 col-sm-offset-1 option_item">
+                    <a ui-sref="submenu({ funnelID: '1' })">
+                        <div class="thumbnail option-thumb option_meeting">
+
+                        </div>
+                        <p>Sandwich Package</p>
+                    </a>
+                </div>
+                <div class="col-sm-2 option_item">
+                    <a ui-sref="submenu({ funnelID: '2' })">
+                        <div class="thumbnail option-thumb option_office">
+
+                        </div>
+                        <p>Wrap Package</p>
+                    </a>
+                </div>
+                <div class="col-sm-2 option_item">
+                    <a ui-sref="submenu({ funnelID: '3' })">
+                        <div class="thumbnail option-thumb option_class">
+
+                        </div>
+                        <p>Pizza Package</p>
+                    </a>
+                </div>
+                <div class="col-sm-2 option_item">
+                    <a ui-sref="submenu({ funnelID: '4' })">
+                        <div class="thumbnail option-thumb option_party">
+
+                        </div>
+                        <p>Asian Bento Boxes</p>
+                    </a>
+                </div>
+                <div class="col-sm-2 option_item">
+                    <a ui-sref="submenu({ funnelID: '5' })">
+                        <div class="thumbnail option-thumb option_wildcard">
+
+                        </div>
+                        <p>Pasta Package</p>
+                    </a>
+                </div>
+            </div>
