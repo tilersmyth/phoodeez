@@ -54,7 +54,6 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
 
    //Open Login Modal and pass necessary vars
     $scope.open = function (modal) {
-
         $modal.open({
             templateUrl: modal,
             controller: modal+'Controller',
@@ -73,6 +72,8 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
             }
        });
     }; 
+
+
 });
 
 /**
@@ -205,7 +206,7 @@ app.controller("mainController", function($scope, $firebase) {
  * 
  */
 
-app.controller("catController", function($scope, $firebase, $stateParams) {
+app.controller("catController", function($scope, $modal, $firebase, $stateParams) {
 
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var catRef = ref.child("packages");
@@ -213,6 +214,36 @@ app.controller("catController", function($scope, $firebase, $stateParams) {
     var catData = $firebase(catRef.child(slug));
     $scope.catInfo = catData.$asObject();
 
-    console.log($scope.catInfo);
 
+    //Open package order modal
+    $scope.open = function (modal) {
+        $modal.open({
+            templateUrl: 'package_order',
+            controller: 'packageController',
+            backdrop: 'static',
+            windowClass: 'packageModal',
+            resolve: {
+                packageData: function () {
+                  return $scope.catInfo.subpackages[modal];
+                }
+            }
+       });
+    }; 
+
+});
+
+/**
+ * Package Order Modal Controller
+ * 
+ * 
+ * 
+ */
+app.controller("packageController", function($scope, $modalInstance, packageData) {
+    $scope.packageData = packageData;
+    $scope.model = { min: 0, max: 99, qty_default: 0};
+
+    //close modal btn
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });

@@ -240,6 +240,100 @@ h1.phoodeez_funnel a span{
   line-height:3em;
 }
 
+.packageModal .modal-content{
+  background-color: #f2f5fa
+}
+
+.modal-package-desc{
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.package-order-info{
+  text-align: center;
+}
+
+.package-order-info p{
+  margin-bottom: 2px;
+}
+
+.package-order-info button{
+  margin: 12px 0 15px 0;
+  outline: none !important;
+}
+
+p.packageName{
+  font-size: 18px;
+  font-weight: 400;
+}
+
+p.packageDesc{
+  font-size: 14px;
+  color: #999999;
+}
+
+.package-options-wrapper{
+  margin-top: 15px; 
+  overflow: auto;
+  max-height: 350px;
+}
+
+.package-options-row{
+  margin:0;
+}
+
+.package-options-wrapper p{
+  margin-bottom: 15px;
+}
+
+.package-options-wrapper ul{
+  padding-left: 0;
+}
+
+.package-options-wrapper ul li{
+  list-style: none;
+  background-color: #ebebeb;
+  height: 65px;
+  padding-top: 5px;
+}
+
+p.package-options-title{
+  font-size: 16px;
+  margin-bottom: 0 !important;
+  font-weight: 400;
+}
+
+p.package-options-desc{
+  font-size: 14px;
+  color: #999999;
+  margin-bottom: 0 !important;
+  line-height: 1em;
+}
+
+.package-option-qty{
+  position: relative;
+  height: 55px;
+}
+
+.package-option-qty .form-group{
+  margin-bottom: 0;
+  position: absolute;
+  top:10px;
+  right: 10px;
+}
+
+.package-option-qty button{
+  padding: 1px 4px;
+  border-radius:20px;
+  outline: none !important;
+  margin: 0 4px;
+}
+
+.package-option-qty input{
+  width:41px;
+  display: inline;
+  text-align: center;
+}
+
 /*Responsive Layouts
 -------------------------------------------------- */
 
