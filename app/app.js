@@ -5,13 +5,43 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('home', {
             url: "/",
-            templateUrl: "app/states/main.html",
-            controller : 'mainController'
+            views:{
+                'viewContent': {
+                    templateUrl: "app/states/main.html",
+                    controller : 'mainController'
+                },
+                'viewCart': {
+                    templateUrl: "app/states/cart.html",
+                    controller : 'cartController'
+                }
+            }
         })
         .state('cat', {
             url: "/cat/:funnelID",
-            templateUrl: "app/states/submenu.html",
-            controller : 'catController'
+            views:{
+                'viewContent': {
+                    templateUrl: "app/states/submenu.html",
+                    controller : 'catController'
+                },
+                'viewCart': {
+                    templateUrl: "app/states/cart.html",
+                    controller : 'cartController'
+                }
+            }
+        })
+        .state('package', {
+            url: "/cat/:funnelID/:singleID",
+            views:{
+                'viewContent': {
+                    templateUrl: "app/states/single.html",
+                    controller : 'catController'
+                },
+                'viewCart': {
+                    templateUrl: "app/states/cart.html",
+                    controller : 'cartController'
+                }
+            }
+
         })
         .state('services', {
             url: "/services",

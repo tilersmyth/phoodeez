@@ -55,22 +55,20 @@
 
             </li>
 
-            <li class="dropdown" id="cart-dropdown" dropdown on-toggle="toggled(open)" is-open="status.isopen">
-              <a href="#" class="dropdown-toggle cart_dropdown" id="cart_dropdown_btn" data-toggle="dropdown" dropdown-toggle
-                       data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-              <div class="dropdown-menu dropdown-menu-right dropdown-cart" role="menu">
-                	<div class="empty_cart"><p><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></p>Your cart is empty.</div>
-              </div>
+            <li id="cart-dropdown" ng-class="{active: cartToggle}">
+               <a href="#" ng-click="cartFctn()" class="cart_dropdown"><span class="glyphicon glyphicon-shopping-cart"></span></a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <!-- Begin page content -->
 
+  <div ui-view="viewCart"></div>
+
+  <!-- Begin page content -->
 	<div class="container-fluid">
-	    <div ui-view></div>
+	    <div ui-view="viewContent"></div>
 	</div>
 
     <!-- End page content -->

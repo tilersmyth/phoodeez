@@ -15,11 +15,6 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
     $scope.authObj = $firebaseAuth(ref);
     $scope.authData = $scope.authObj.$getAuth();
 
-    //Listener for user login
-    $scope.$on('userOn', function(event, data) {
-        $scope.loggedIn = data;
-    });
-
     //store user data if logged in
     $scope.authObj.$onAuth(function(authData) { 
         if (authData) {
@@ -72,6 +67,13 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
             }
        });
     }; 
+
+    //Toggle Cart Dropdown
+    $scope.cartToggle = false;
+    $scope.cartFctn = function () {
+        $scope.cartToggle = $scope.cartToggle === true ? false: true;
+    };
+
 
 
 });
@@ -210,40 +212,22 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
 
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var catRef = ref.child("packages");
-    var slug = $stateParams.funnelID; 
-    var catData = $firebase(catRef.child(slug));
+    $scope.Slug = $stateParams.funnelID; 
+    var catData = $firebase(catRef.child($scope.Slug));
     $scope.catInfo = catData.$asObject();
+    $scope.singleInfo = $stateParams.singleID; 
 
-
-    //Open package order modal
-    $scope.open = function (modal) {
-        $modal.open({
-            templateUrl: 'package_order',
-            controller: 'packageController',
-            backdrop: 'static',
-            windowClass: 'packageModal',
-            resolve: {
-                packageData: function () {
-                  return $scope.catInfo.subpackages[modal];
-                }
-            }
-       });
-    }; 
 
 });
 
+
 /**
- * Package Order Modal Controller
+ * Cart State Controller
  * 
  * 
  * 
  */
-app.controller("packageController", function($scope, $modalInstance, packageData) {
-    $scope.packageData = packageData;
-    $scope.model = { min: 0, max: 99, qty_default: 0};
+app.controller("cartController", function($scope) {
 
-    //close modal btn
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
+
 });

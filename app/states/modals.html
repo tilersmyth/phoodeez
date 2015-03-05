@@ -88,22 +88,22 @@
 				<button class="btn btn-primary">Add to Cart</button>
     		</div>
     	</div>
-
     	<div class="package-options-wrapper">
-    			<p class="lead packageName">Choose options:</p>
+    			<p class="lead packageName">Choose options: </p>
     			<ul ng-repeat="options in packageData.Options">
 	    			<li>
 	    				<div class="row package-options-row">
 	    					<div class="col-sm-9">
 	    						<p class="lead package-options-title">{{options.title}}</p>
 	    						<p class="lead package-options-desc">{{options.desc}}</p>
-	    					</div>
+	    					</div> 
 	    					<div class="col-sm-3 package-option-qty">
-		    					<order-qty min="model.min" max="model.max" qty="0" inc="$index"></order-qty>
+		    					<order-qty ng-model="totalValue" min="model.min" max="model.max" qty="0"></order-qty>
 	    					</div>
 	    				</div>
 	    			</li>
     			</ul>
+
     	</div>
 	
 	</div>

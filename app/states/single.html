@@ -1,0 +1,18 @@
+	
+    <div class="row">
+    <div class="col-sm-6 col-sm-offset-1">
+    	<div class="backlink"><a ng-show="catInfo.info.title" ui-sref="cat({funnelID: '{{Slug}}'})"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to {{catInfo.info.title}} options</a></div>
+
+    	<div class="package_options_wrapper">
+    		<div class="package_options_header">
+
+    		</div><!-- .package_options_header -->
+    		<div class="package_options_list">
+    			<ul ng-repeat="tester in catInfo.subpackages[singleInfo].Options"> 
+    				<li>{{tester.desc}}</li>
+    			</ul>
+    		</div><!-- .package_options_list -->
+    	</div><!-- .package_options_wrapper -->
+    </div>
+    </div><!-- .row -->
+    

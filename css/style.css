@@ -77,17 +77,13 @@ a.phoodeez-brand p{
   font-size: 25px;
 }
 
-.navbar-nav-phoodeez>.open>a{
-  color: #d0483e !important;
-}
 
 .dropdown-cart{
   background-color: #e7e7e7;
-  border:none !important;
-  border-radius: 0 !important;
-  min-width: 360px;
-  padding-top:20px;
-  padding-bottom: 20px; 
+  margin-left: 40px;
+  padding: 20px;
+  -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  box-shadow: 0 6px 12px rgba(0,0,0,.175); 
 }
 
 .empty_cart{
@@ -96,6 +92,19 @@ a.phoodeez-brand p{
 
 .empty_cart p{
   font-size: 20px;
+}
+
+.cartContainer{
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 0;
+  margin-top: 1px;
+  padding-top:62px;
+}
+
+#cart-dropdown.active a{
+  color: #d0483e !important;
 }
 
 /*Main Content
@@ -333,6 +342,34 @@ p.package-options-desc{
   display: inline;
   text-align: center;
 }
+
+/*Single Page
+-------------------------------------------------- */
+.backlink{
+    margin: 15px 0;
+}
+
+.backlink a{
+  color: #ecf0f1
+}
+
+.package_options_wrapper{
+  background-color: #ecf0f1;
+  padding: 15px;
+}
+
+.package_options_header{
+  height: 150px;
+}
+
+.package_options_list ul{
+  padding: 0;
+}
+
+.package_options_list ul li{
+  list-style: none;
+}
+
 
 /*Responsive Layouts
 -------------------------------------------------- */
