@@ -253,10 +253,6 @@ h1.phoodeez_funnel a span{
   background-color: #f2f5fa
 }
 
-.modal-package-desc{
-  border-bottom: 1px solid #e5e5e5;
-}
-
 .package-order-info{
   text-align: center;
 }
@@ -268,6 +264,15 @@ h1.phoodeez_funnel a span{
 .package-order-info button{
   margin: 12px 0 15px 0;
   outline: none !important;
+}
+
+.package-modal-body hr{
+  margin: 10px 0;
+}
+
+.package-addtocart{
+  text-align: right;
+  margin-right: 10px;
 }
 
 p.packageName{
@@ -282,8 +287,7 @@ p.packageDesc{
 
 .package-options-wrapper{
   margin-top: 15px; 
-  overflow: auto;
-  max-height: 350px;
+  position: relative;
 }
 
 .package-options-row{
@@ -291,7 +295,7 @@ p.packageDesc{
 }
 
 .package-options-wrapper p{
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .package-options-wrapper ul{
@@ -355,20 +359,86 @@ p.package-options-desc{
 
 .package_options_wrapper{
   background-color: #ecf0f1;
-  padding: 15px;
+  padding: 20px 0;
+}
+
+.single_package_container{
+  height: 110px;
+  overflow: hidden;
 }
 
 .package_options_header{
-  height: 150px;
+  height: 130px;
+  padding: 0 20px;
 }
+
+.package_options_header img{
+  height: auto;
+  width: 130px;
+  overflow: hidden;
+}
+
+.package_options_header h2{
+  font-size: 20px;
+  margin:0 0 10px -15px;
+}
+
+.package_options_header p{
+  margin-left: -15px;
+  color: #999999
+  }
+
+ .single_price{
+  text-align: right;
+ } 
+
+ .single-add-icon, .single-package-info{
+  display: inline-block;
+ }
 
 .package_options_list ul{
   padding: 0;
+  margin-top: 10px;
 }
 
 .package_options_list ul li{
   list-style: none;
+  margin: 0 20px;
+  border-bottom: 1px solid #ccc
 }
+
+.package_options_list h3{
+  margin: 0;
+  padding: 20px;
+  font-size: 16px;
+  background-color: #e7e7e7;
+}
+
+.package_options_list a{
+  display: block;
+  color: #a43a32;
+}
+
+.package_options_list a p{
+  color: #999999;
+}
+
+.package_options_list a:hover {
+  text-decoration: none !important;
+  color: #337ab7;
+}
+
+.single-add-icon{
+  vertical-align:middle;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 20px;
+  height: 20px;
+ }
+
+ .package_options_list a:hover .single-add-icon{
+  font-size: 20px;
+ }
 
 
 /*Responsive Layouts

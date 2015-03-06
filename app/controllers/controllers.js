@@ -31,13 +31,13 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
         }
     });
 
+
     //check to see if user logged in
     if ($scope.authData !== null) {
             var userInfo = $firebase(usersRef.child($scope.authData.uid));
             $scope.userData = userInfo.$asObject();
             $scope.$emit('userOn', $scope.userData);
     } else $scope.$emit('userOn', false);
-
 
     //Log out
     $scope.logout = function() {
@@ -70,7 +70,7 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
 
     //Toggle Cart Dropdown
     $scope.cartToggle = false;
-    $scope.cartFctn = function () {
+    $scope.cartFctn = function () { 
         $scope.cartToggle = $scope.cartToggle === true ? false: true;
     };
 
@@ -168,7 +168,8 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
             password: credentials.password
         })
         .then(function(user) {
-            // console.log('Authentication success');
+            //console.log('Authentication success');
+
             $rootScope.$broadcast('userOn', $scope.userData);
             $modalInstance.dismiss('cancel');
         }, function(error) {
@@ -218,8 +219,38 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
     $scope.singleInfo = $stateParams.singleID; 
 
 
+    //Open Order Modal and pass necessary vars
+    $scope.openOrder = function (ID) {  
+        $modal.open({
+            templateUrl: "package_order",
+            backdrop: 'static',
+            controller: 'packageModalController',
+            resolve: {
+                packageData: function () {
+                  return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];
+                }
+            }
+       });
+    }; 
+
 });
 
+/**
+ * Package Modal Controller
+ * 
+ * 
+ * 
+ */
+app.controller("packageModalController", function($scope,$modalInstance, packageData) {
+    $scope.model = { min: 0, max: 99, qty_default: 0};
+    $scope.packageData = packageData;
+
+    //close modal
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+});
 
 /**
  * Cart State Controller

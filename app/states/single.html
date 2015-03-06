@@ -5,11 +5,34 @@
 
     	<div class="package_options_wrapper">
     		<div class="package_options_header">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="single_package_container">  
+                            <img src="img/items/{{catInfo.subpackages[singleInfo].img}}">
+                        </div><!-- .single_package_container -->
+                    </div>
+                    <div class="col-sm-7">
+                        <h2>{{catInfo.subpackages[singleInfo].Name}}</h2>
+                        <p>{{catInfo.subpackages[singleInfo].Desc}}</p>
+                    </div>
 
+                    <div class="col-sm-2 single_price">
+                        <h2>{{catInfo.subpackages[singleInfo].Price | currency}}</h2>
+                    </div>
+                </div>
     		</div><!-- .package_options_header -->
     		<div class="package_options_list">
-    			<ul ng-repeat="tester in catInfo.subpackages[singleInfo].Options"> 
-    				<li>{{tester.desc}}</li>
+                <h3>Add Package Options</h3>
+    			<ul ng-repeat="package in catInfo.subpackages[singleInfo].Options"> 
+    				<li>
+                        <a href="#" ng-click="openOrder(package.ID)">
+                            <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+                            <div class="single-package-info">
+                               {{package.title}}
+                                <p>{{package.desc}}</p>
+                            </div>
+                        </a>
+                    </li>
     			</ul>
     		</div><!-- .package_options_list -->
     	</div><!-- .package_options_wrapper -->
