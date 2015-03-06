@@ -15,6 +15,11 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
     $scope.authObj = $firebaseAuth(ref);
     $scope.authData = $scope.authObj.$getAuth();
 
+    //Listener for user login
+   $scope.$on('userOn', function(event, data) {
+        $scope.loggedIn = data;
+    });
+
     //store user data if logged in
     $scope.authObj.$onAuth(function(authData) { 
         if (authData) {
@@ -171,6 +176,7 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
             //console.log('Authentication success');
 
             $rootScope.$broadcast('userOn', $scope.userData);
+
             $modalInstance.dismiss('cancel');
         }, function(error) {
            // console.log('Authentication failure');
