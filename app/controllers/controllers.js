@@ -6,7 +6,7 @@
  * 
  */
 
-app.controller("ApplicationController", function($scope, $modal, UserDataStorage, $firebaseAuth, $firebase) {
+app.controller("ApplicationController", function($scope, $modal, UserDataStorage, $firebaseAuth, $firebase, $location) {
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var usersRef = ref.child("users");
     var userData = $firebase(usersRef);
@@ -14,6 +14,9 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
 
     $scope.authObj = $firebaseAuth(ref);
     $scope.authData = $scope.authObj.$getAuth();
+
+    //Get current URL for modal click
+    $scope.currentUrl = $location.absUrl();
 
     //Listener for user login
    $scope.$on('userOn', function(event, data) {
@@ -73,13 +76,27 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
        });
     }; 
 
-    //Toggle Cart Dropdown
+    //Cart Action Start
     $scope.cartToggle = false;
-    $scope.cartFctn = function () { 
-        $scope.cartToggle = $scope.cartToggle === true ? false: true;
+    $scope.cartFctn = function (open) { 
+        if(open){
+            $scope.cartToggle = true;
+        }else{
+            $scope.cartToggle = $scope.cartToggle === true ? false: true;
+        }
     };
 
+    $scope.cartItems = [];
+    $scope.$on('cartSubmitOpen', function(event, data) {
+         //Step 1. cart open   
+         $scope.cartFctn(data.open);
+         //Step 2. fill cart
 
+         $scope.cartData = data.content;
+         $scope.cartItems.push($scope.cartData)
+
+         console.log($scope.cartItems);
+    })
 
 });
 
@@ -225,6 +242,8 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
     $scope.singleInfo = $stateParams.singleID; 
 
 
+
+
     //Open Order Modal and pass necessary vars
     $scope.openOrder = function (ID) {  
         $modal.open({
@@ -233,7 +252,13 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
             controller: 'packageModalController',
             resolve: {
                 packageData: function () {
-                  return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];
+                    return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];            
+                },
+                packagePrice: function (){
+                    return $scope.catInfo.subpackages[$scope.singleInfo].Price;
+                },
+                sideData: function () {
+                    return $scope.catInfo.subpackages[$scope.singleInfo].side;
                 }
             }
        });
@@ -247,14 +272,28 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
  * 
  * 
  */
-app.controller("packageModalController", function($scope,$modalInstance, packageData) {
-    $scope.model = { min: 0, max: 99, qty_default: 0};
+app.controller("packageModalController", function($scope, $rootScope, $modalInstance, packageData, sideData, packagePrice) {
+    $scope.model = { min: 1, max: 99, qty: 1};
     $scope.packageData = packageData;
+    $scope.packagePrice = packagePrice;
+    $scope.sideData = sideData;
 
     //close modal
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+
+    
+
+    //cart submit action
+    $scope.cartSubmit = function (id) {
+        var cartAction = { open: "openCart", content: id};
+        $modalInstance.dismiss('cancel');
+        $rootScope.$broadcast('cartSubmitOpen', cartAction);
+
+
+    }
 
 });
 

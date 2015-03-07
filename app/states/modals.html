@@ -73,7 +73,7 @@
     <div class="modal-header">
     	<button type="button" class="close" ng-click="cancel()"	 aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
-        	Add Package
+        	Add Package ({{(packagePrice*model.qty)|currency}})
         </h4>
     </div>
     <div class="modal-body package-modal-body">
@@ -84,21 +84,31 @@
     		</div>
     		<div class="col-sm-4 package-order-info">
 				<div class="package-option-qty">
-					<order-qty min="model.min" max="model.max" qty="0"></order-qty>
+					<div class="form-group">
+    					<button class="btn btn-primary" ng-click="model.qty = model.qty - 1" ng-disabled="model.qty <= model.min"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+  						<input type="text" class="form-control" ng-model="model.qty" value="{{model.qty}}">
+  						<button class="btn btn-primary" ng-click="model.qty = model.qty + 1" ng-disabled="model.qty >= model.max"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+  					</div>
 				</div>
 				<div class="package-addtocart">
-					<button class="btn btn-primary">Add to Cart</button>
+					<button class="btn btn-primary" ng-click="cartSubmit(packageData.ID);">Add to Cart</button>
 				</div>
     		</div>
     	</div>
     	<hr>
+    	<div ng-if="sideData" class="sideOptions">
+    		<ul class="list-inline">
+    			<li><h4>Choose side:</h4></li>
+    			<li ng-repeat="sides in sideData" class="sideOptions_choices">
+    				<div class="radio"><input type="radio" name="optionsRadios" value="" ng-checked="$index == 0"></div>
+    				{{sides}}
+    			</li>
+    		</ul>	
+    		<hr>    		
+    	</div>
     	<div class="package-options-wrapper">
-			<div class="row package-options-row">
-				<div class="col-sm-12">
-					<p>Item details (optional):</p>
-					<textarea class="form-control" rows="2" placeholder="E.g. Hold the mayo"></textarea>
-				</div> 
-			</div>
+			<p>Item details (optional):</p>
+			<textarea class="form-control" rows="2" placeholder="E.g. Hold the mayo"></textarea>
     	</div>
 	</div>
 
