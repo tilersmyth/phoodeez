@@ -1,16 +1,53 @@
 <div class="container cartContainer" ng-show="cartToggle">
 	<div class="row">
 		<div class="col-md-offset-7 col-md-5">
-			<div class="dropdown-cart">
-				<div class="empty_cart" ng-show="!cartData">
+			<div class="dropdown-cart">	
+				<div class="empty_cart" ng-show="!cartObjects.length > 0">
 					<p><span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span></p>
 					Your cart is empty.
 				</div>	
-				<div class="cart_content" ng-show="cartData">
-					<div ng-repeat="cartItem in cartItems">
-				        {{cartItem}}
-				    </div>
-					
+				<div class="cart_content" ng-show="cartObjects.length > 0">
+					<div ng-repeat="cartItem in cartObjects">
+				        {{cartItem.vendorName}}
+
+				        <div class="row cart_container" ng-repeat="cartList in cartItem.cart">
+				        		<div class="col-xs-9">
+				        			<div class="cart_item_qty">
+				        				<input type="number" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99" ng-model="cartList.itemQty" value="{{cartList.itemQty}}">
+				        			</div>
+				        			<div class="cart_item_name">
+				        				<div class="sub_item_name">{{cartList.itemName}}</div>
+				        				<div class="sub_item_note">{{cartList.itemNotes}}</div>
+				        				<div class="sub_item_edit-delete">
+				        					<a href="#">Edit</a> | <a href="#">Delete</a>
+				        				</div>
+				        			</div>
+				        		</div>
+				        		<div class="col-xs-3">
+				        			<div class="cart_item_price">{{(cartList.itemQty * cartList.itemPrice)|currency}}</div>
+				        		</div>
+				        </div><!-- .cart_container -->
+				    <div class="cart_sum">
+				    <hr>	
+				    	<div class="row cart_subTotal">
+				    		<div class="text col-xs-9">Sub-Total:</div>
+				    		<div class="num col-xs-3">{{subTotal|currency}}</div>
+				    	</div>
+				    	<div class="row cart_delFee">
+				    		<div class="text col-xs-9">Delivery Fee:</div>
+				    		<div class="num col-xs-3">$30.00</div>
+				    	</div>
+				    	<div class="row cart_salesTax">
+				    		<div class="text col-xs-9">Sales Tax:</div>
+				    		<div class="num col-xs-3">{{salesTax|currency}}</div>
+				    	</div>
+				    	<div class="row cart_saleTotal">
+				    		<div class="text col-xs-9">Total:</div>
+				    		<div class="num col-xs-3">{{totalTotal|currency}}</div>
+				    	</div>
+
+				    </div> <!-- .cart_sum -->
+				    </div>	<!-- cartObjects -->
 				</div>
 			</div>
 		</div>

@@ -8,6 +8,8 @@
     
 
 <link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 </head>
@@ -56,7 +58,9 @@
             </li>
 
             <li id="cart-dropdown" ng-class="{active: cartToggle}">
-               <a href="#" ng-click="cartFctn()" class="cart_dropdown"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+               <a href="#" ng-click="cartFctn()" class="cart_dropdown">
+               <div class="cartTotal" ng-show="total().total>0">{{ total().total | currency }}</div>
+               <span class="glyphicon glyphicon-shopping-cart custom-cart"></span></a>
             </li>
           </ul>
         </div><!--/.nav-collapse -->

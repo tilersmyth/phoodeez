@@ -83,20 +83,19 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
         }
     };
 
-
+$scope.testerr = "hey";
     
-$scope.objects = [];
+$scope.cartObjects = [];
     $scope.$on('cartSubmitOpen', function(event, data) {
          //Step 1. cart open   
          $scope.cartFctn(data.open);
          //Step 2. fill cart
-
-        // vendorName, packageID, itemID, itemQty, itemPrice, itemNotes
         
         var obj = {
             vendorName: data.vendorName,
             "cart": [{
               packageID: data.packageID,
+              itemName: data.itemName,
               itemID: data.itemID,
               itemQty: data.itemQty,
               itemPrice: data.itemPrice,
@@ -105,20 +104,39 @@ $scope.objects = [];
 
               
          var addToArray=true;
-         for(var i=0;i<$scope.objects.length;i++){
-             if($scope.objects[i].vendorName===obj.vendorName){
-                 console.log('existing'); 
-                 $scope.objects[i].cart.push(obj.cart[0]);
+         for(var i=0;i<$scope.cartObjects.length;i++){
+             if($scope.cartObjects[i].vendorName===obj.vendorName){
+                 $scope.cartObjects[i].cart.push(obj.cart[0]);
                  addToArray=false;
              } 
          }
         if(addToArray){ 
-            console.log('new'); 
-            $scope.objects.push(obj);
+            $scope.cartObjects.push(obj);
         }
 
-        console.log($scope.objects);
+        //console.log($scope.cartObjects);
     })
+
+    $scope.total = function() { 
+        var subtotal = 0; var salestax = 0; var total = 0;
+        angular.forEach($scope.cartObjects, function(item) {
+            angular.forEach(item.cart, function(itemSingle) {
+                subtotal += itemSingle.itemPrice * itemSingle.itemQty;
+                salestax += subtotal*.0625;
+                total += subtotal+salestax+30;
+            })        
+        })
+        $scope.subTotal =  subtotal;
+        $scope.salesTax =  salestax;
+        $scope.totalTotal =  total;
+        return {
+            total: total
+         };
+
+         
+    }
+
+
 
 });
 
@@ -305,8 +323,8 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
     //data to pass: 1. VendorName, packageID, itemID, Qty, Price, Notes   
 
     //cart submit action
-    $scope.cartSubmit = function (vendorName, packageID, itemID, itemQty, itemPrice, itemNotes) {
-        var cartAction = { open: "openCart", vendorName: vendorName, packageID: packageID, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
+    $scope.cartSubmit = function (vendorName, packageID, itemName, itemID, itemQty, itemPrice, itemNotes) {
+        var cartAction = { open: "openCart", vendorName: vendorName, packageID: packageID, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
         $modalInstance.dismiss('cancel');
         $rootScope.$broadcast('cartSubmitOpen', cartAction);
 
@@ -322,6 +340,13 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
  * 
  */
 app.controller("cartController", function($scope) {
+        $scope.total = function() {
+        var total = 0;
+        angular.forEach($scope.invoice.items, function(item) {
+            total += item.qty * item.cost;
+        })
 
+        return total;
+    }
 
 });

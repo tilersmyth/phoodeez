@@ -15,6 +15,7 @@ body {
       rgba(211, 71, 61, 0.98)
     ),
     url('../img/body_background.png') no-repeat 100% 100%;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .footer {
@@ -67,16 +68,9 @@ a.phoodeez-brand p{
 }
 
 .navbar-nav-phoodeez li a{
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 21px;
+  padding-bottom: 21px;
 }
-
-.navbar-phoodeez li a.cart_dropdown{
-  padding-top: 19px;
-  padding-bottom: 18px;
-  font-size: 25px;
-}
-
 
 .dropdown-cart{
   background-color: #e7e7e7;
@@ -105,6 +99,62 @@ a.phoodeez-brand p{
 
 #cart-dropdown.active a{
   color: #d0483e !important;
+}
+
+.cart_container{
+  margin-bottom: 10px;
+}
+
+.cartTotal{
+  padding-right: 5px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.navbar-nav-phoodeez li a.cart_dropdown{
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+
+.custom-cart{
+ font-size: 25px;  
+}
+
+.cart_item_qty{
+  width:50px;
+  float: left !important;
+}
+
+.cart_item_qty input{
+  text-align: center;
+  max-width: 40px;
+  padding-left: 0;
+  padding-right: 0;
+  height:36px;
+}
+
+.cart_item_name{
+  margin-left: 55px;
+}
+
+.cart_item_price{
+  text-align: right;
+}
+
+.sub_item_name{
+  font-weight: bold;
+}
+
+.cart_sum hr{
+  border-top: 1px solid #dddddd;
+}
+
+.cart_sum .num{
+  text-align: right;
+}
+
+.cart_saleTotal{
+  margin-top: 20px;
 }
 
 /*Main Content
