@@ -15,9 +15,6 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
     $scope.authObj = $firebaseAuth(ref);
     $scope.authData = $scope.authObj.$getAuth();
 
-    //Get current URL for modal click
-    $scope.currentUrl = $location.absUrl();
-
     //Listener for user login
    $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data;
@@ -86,16 +83,41 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
         }
     };
 
-    $scope.cartItems = [];
+
+    
+$scope.objects = [];
     $scope.$on('cartSubmitOpen', function(event, data) {
          //Step 1. cart open   
          $scope.cartFctn(data.open);
          //Step 2. fill cart
 
-         $scope.cartData = data.content;
-         $scope.cartItems.push($scope.cartData)
+        // vendorName, packageID, itemID, itemQty, itemPrice, itemNotes
+        
+        var obj = {
+            vendorName: data.vendorName,
+            "cart": [{
+              packageID: data.packageID,
+              itemID: data.itemID,
+              itemQty: data.itemQty,
+              itemPrice: data.itemPrice,
+              itemNotes: data.itemNotes
+            }]};
 
-         console.log($scope.cartItems);
+              
+         var addToArray=true;
+         for(var i=0;i<$scope.objects.length;i++){
+             if($scope.objects[i].vendorName===obj.vendorName){
+                 console.log('existing'); 
+                 $scope.objects[i].cart.push(obj.cart[0]);
+                 addToArray=false;
+             } 
+         }
+        if(addToArray){ 
+            console.log('new'); 
+            $scope.objects.push(obj);
+        }
+
+        console.log($scope.objects);
     })
 
 });
@@ -251,14 +273,11 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
             backdrop: 'static',
             controller: 'packageModalController',
             resolve: {
-                packageData: function () {
+                singleData: function () {
                     return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];            
                 },
-                packagePrice: function (){
-                    return $scope.catInfo.subpackages[$scope.singleInfo].Price;
-                },
-                sideData: function () {
-                    return $scope.catInfo.subpackages[$scope.singleInfo].side;
+                packageData: function (){
+                    return $scope.catInfo.subpackages[$scope.singleInfo];
                 }
             }
        });
@@ -272,11 +291,10 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
  * 
  * 
  */
-app.controller("packageModalController", function($scope, $rootScope, $modalInstance, packageData, sideData, packagePrice) {
+app.controller("packageModalController", function($scope, $rootScope, $modalInstance, singleData, packageData) {
     $scope.model = { min: 1, max: 99, qty: 1};
+    $scope.singleData = singleData;
     $scope.packageData = packageData;
-    $scope.packagePrice = packagePrice;
-    $scope.sideData = sideData;
 
     //close modal
     $scope.cancel = function () {
@@ -284,11 +302,11 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
     };
 
 
-    
+    //data to pass: 1. VendorName, packageID, itemID, Qty, Price, Notes   
 
     //cart submit action
-    $scope.cartSubmit = function (id) {
-        var cartAction = { open: "openCart", content: id};
+    $scope.cartSubmit = function (vendorName, packageID, itemID, itemQty, itemPrice, itemNotes) {
+        var cartAction = { open: "openCart", vendorName: vendorName, packageID: packageID, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
         $modalInstance.dismiss('cancel');
         $rootScope.$broadcast('cartSubmitOpen', cartAction);
 

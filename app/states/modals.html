@@ -73,14 +73,14 @@
     <div class="modal-header">
     	<button type="button" class="close" ng-click="cancel()"	 aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
-        	Add Package ({{(packagePrice*model.qty)|currency}})
+        	Add Package ({{(packageData.Price*model.qty)|currency}})
         </h4>
     </div>
     <div class="modal-body package-modal-body">
     	<div class="row modal-package-desc">
     		<div class="col-sm-8">
-    			<p class="lead packageName">{{packageData.title}}</p>
-    			<p class="lead packageDesc">{{packageData.desc}}</p>
+    			<p class="lead packageName">{{singleData.title}}</p>
+    			<p class="lead packageDesc">{{singleData.desc}}</p>
     		</div>
     		<div class="col-sm-4 package-order-info">
 				<div class="package-option-qty">
@@ -91,15 +91,15 @@
   					</div>
 				</div>
 				<div class="package-addtocart">
-					<button class="btn btn-primary" ng-click="cartSubmit(packageData.ID);">Add to Cart</button>
+					<button class="btn btn-primary" ng-click="cartSubmit(packageData.Vendor, packageData.VendorID, singleData.ID, model.qty, packageData.Price, itemNote);">Add to Cart</button>	
 				</div>
     		</div>
     	</div>
     	<hr>
-    	<div ng-if="sideData" class="sideOptions">
+    	<div ng-if="packageData.side" class="sideOptions">
     		<ul class="list-inline">
     			<li><h4>Choose side:</h4></li>
-    			<li ng-repeat="sides in sideData" class="sideOptions_choices">
+    			<li ng-repeat="sides in packageData.side" class="sideOptions_choices">
     				<div class="radio"><input type="radio" name="optionsRadios" value="" ng-checked="$index == 0"></div>
     				{{sides}}
     			</li>
@@ -108,7 +108,7 @@
     	</div>
     	<div class="package-options-wrapper">
 			<p>Item details (optional):</p>
-			<textarea class="form-control" rows="2" placeholder="E.g. Hold the mayo"></textarea>
+			<textarea class="form-control" ng-model="itemNote" rows="2" placeholder="E.g. Hold the mayo"></textarea>
     	</div>
 	</div>
 
