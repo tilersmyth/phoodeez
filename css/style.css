@@ -120,6 +120,10 @@ a.phoodeez-brand p{
   padding-bottom: 17px;
 }
 
+.navbar-nav-phoodeez li a.cart_dropdown:focus{
+  color:#777;
+}
+
 .custom-cart{
  font-size: 25px;  
 }
@@ -164,6 +168,18 @@ a.phoodeez-brand p{
 .cart_action{
   margin-bottom: 20px;
   text-align: center;
+}
+
+.cart_action button{
+  outline: none !important;
+}
+
+.short_notice{
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
 }
 
 /*Main Content

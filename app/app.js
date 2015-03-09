@@ -62,6 +62,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('jobs', {
             url: "/jobs",
             templateUrl: "app/states/jobs.html"
+        })
+        .state('calendar', {
+            url: "/calendar",
+            views:{
+                'viewContent': {
+                    templateUrl: "app/states/calendar.html",
+                },
+                'viewCart': {
+                    templateUrl: "app/states/cart.html",
+                    controller : 'cartController'
+                }
+            }
         });
 });
 
