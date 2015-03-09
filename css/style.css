@@ -94,7 +94,10 @@ a.phoodeez-brand p{
   right: 0;
   height: 0;
   margin-top: 1px;
-  padding-top:62px;
+}
+
+.cartContainer_row{
+  height: 0;
 }
 
 #cart-dropdown.active a{
@@ -102,6 +105,7 @@ a.phoodeez-brand p{
 }
 
 .cart_container{
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -145,7 +149,7 @@ a.phoodeez-brand p{
   font-weight: bold;
 }
 
-.cart_sum hr{
+.dropdown-cart hr{
   border-top: 1px solid #dddddd;
 }
 
@@ -155,6 +159,11 @@ a.phoodeez-brand p{
 
 .cart_saleTotal{
   margin-top: 20px;
+}
+
+.cart_action{
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 /*Main Content
