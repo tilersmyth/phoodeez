@@ -25,7 +25,7 @@
                 <h3>Add Package Options</h3>
     			<ul ng-repeat="package in catInfo.subpackages[singleInfo].Options"> 
     				<li>
-                        <a href="#" ng-click="openOrder(package.ID)">
+                        <a href="#/cat/{{catInfo.info.url}}/{{singleInfo}}" ng-click="openOrder(package.ID)">
                             <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
                             <div class="single-package-info">
                                {{package.title}}
