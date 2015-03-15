@@ -3,7 +3,7 @@
         <div ng-repeat="package in packages">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
                 <a ui-sref="cat({ funnelID: '{{package.info.url}}' })">
-                    <div class="thumbnail option-thumb" ng-style="{'background-image':'url(img/cat_pics/{{package.info.img}})'}"></div>
+                    <div class="thumbnail option-thumb" ng-style="{'background-image':'url({{rootPath}}img/cat_pics/{{package.info.img}})'}"></div>
                     <p>{{package.info.title}}</p>
                 </a>
             </div>

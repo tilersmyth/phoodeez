@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="phoodeez">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Phoodeez</title> 
+  <head>
+    <meta charset="utf-8">
+    <title><?php bloginfo('name'); ?></title>
+
+    <link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
     
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 
-<link href='http://fonts.googleapis.com/css?family=Crete+Round' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
-</head>
-<body ng-controller="ApplicationController">
+    <base href="http://localhost/~tylersmith/incognito/">
+    <?php wp_head(); ?>
+   
+  </head>
+  <body>
+  
+   <body ng-controller="ApplicationController">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-phoodeez navbar-fixed-top">
       <div class="container">
@@ -45,7 +51,7 @@
 
             <li class="dropdown" ng-show="loggedIn" dropdown>
               <a href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown">
-                    <span ng-cloak>{{userData.firstName}} {{userData.lastName}} <span class="caret"></span></span>
+                    <span ng-cloak>{{loggedIn.first_name}} {{loggedIn.last_name}} <span class="caret"></span></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right" role="menu">
                     <li><a href="#">Profile</a></li>
@@ -69,8 +75,6 @@
     </nav>
 
 
-
-
   <!-- Begin page content -->
 	<div class="container-fluid">
 	    <div ui-view="viewContent"></div>
@@ -83,23 +87,7 @@
       </div>
    </footer>
 
-<div ng-include="'app/states/modals.html'"></div>
-
-
-<!-- Vendor Libs -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
-<script src="https://code.angularjs.org/1.3.13/angular-animate.min.js"></script>
-<script src="https://cdn.firebase.com/js/client/2.1.2/firebase.js"></script>
-<script src="https://cdn.firebase.com/libs/angularfire/0.9.2/angularfire.min.js"></script>
-       
-<!-- UI Libs -->        
-<script src="scripts/ui-bootstrap-tpls-0.12.0.min"></script>
-
-<!-- App Libs -->
-<script src="app/app.js"></script>
-<script src="app/ui-router.js"></script>
-<script src="app/controllers/controllers.js"></script>
-<script src="app/services/factory.js"></script>
-<script src="app/directives/directives.js"></script>
- </body>
-</html>	
+<div ng-include="'http://localhost/~tylersmith/incognito/wp-content/themes/phoodeez/app/partials/modals.html'"></div>
+    <?php wp_footer(); ?>
+  </body>
+</html>

@@ -1,3 +1,10 @@
+/*
+Theme Name: Phoodeez
+Author: Tyler Smith
+Description: Phoodeez WP/Angular Integration
+Version: 1.0
+*/
+
 [ng\:cloak], [ng-cloak], .ng-cloak { display: none; }
 
 /* Sticky footer styles
@@ -14,7 +21,7 @@ body {
       rgba(211, 71, 61, 0.98), 
       rgba(211, 71, 61, 0.98)
     ),
-    url('../img/body_background.png') no-repeat 100% 100%;
+    url('img/body_background.png') no-repeat 100% 100%;
   font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -286,7 +293,17 @@ h1.phoodeez_funnel a span{
 .phoodeez-login{
   width:100%;
   outline: none !important;
+  position: relative;
 }
+
+.login-loader{
+  position: absolute;
+  left: 20px;
+  margin: auto;
+  top: 0; 
+  bottom: 0;
+}
+
 
 .login-modal-body{
   padding-left: 30px;
@@ -310,6 +327,16 @@ h1.phoodeez_funnel a span{
 
 .login_seperator{
   margin: 0px 0 25px 0;
+}
+
+.login_modal_error{
+  width:100%;
+  background-color: #f2dede;
+  border:1px solid #ebccd1;
+  color:#a94442;
+  line-height: 1.2em;
+  padding:10px;
+  margin-bottom: 5px;
 }
 
 .create_name_form input{

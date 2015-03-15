@@ -6,7 +6,7 @@
         <div ng-repeat="subpackages in catInfo.subpackages">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
                 <a ui-sref="package({ funnelID: '{{catInfo.info.url}}', singleID: '{{subpackages.VendorID}}' })">
-                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url(img/items/{{subpackages.img}})'}">
+                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{rootPath}}img/items/{{subpackages.img}})'}">
                     <div class="package_title">{{subpackages.Name}}</div>
                     </div>
                     <p>{{subpackages.Vendor}}</p>

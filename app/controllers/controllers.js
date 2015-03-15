@@ -6,48 +6,30 @@
  * 
  */
 
-app.controller("ApplicationController", function($scope, $modal, UserDataStorage, $firebaseAuth, $firebase, $location) {
+app.controller("ApplicationController", function($scope, $modal, $firebaseAuth, $firebase, $location, $http, $localStorage, Auth) {
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var usersRef = ref.child("users");
     var userData = $firebase(usersRef);
     var userDataArray = $firebase(usersRef).$asArray();
 
-    $scope.authObj = $firebaseAuth(ref);
-    $scope.authData = $scope.authObj.$getAuth();
+    //set the root path
+    $scope.rootPath = myLocalized.root;
 
+   
     //Listener for user login
    $scope.$on('userOn', function(event, data) {
-        $scope.loggedIn = data;
+        $scope.loggedIn = data; 
+
     });
 
-    //store user data if logged in
-    $scope.authObj.$onAuth(function(authData) { 
-        if (authData) {
-            var TuserInfo = $firebase(usersRef.child(authData.uid));
-            var userStor = TuserInfo.$asObject();
-            userStor.$loaded()
-                .then(function(data) {
-                    UserDataStorage.update(data);
-                    UserDataStorage.isLoading(false);
-                });
-        } else {
-            UserDataStorage.update(false);
-            UserDataStorage.isLoading(false);
-        }
-    });
-
-
-    //check to see if user logged in
-    if ($scope.authData !== null) {
-            var userInfo = $firebase(usersRef.child($scope.authData.uid));
-            $scope.userData = userInfo.$asObject();
-            $scope.$emit('userOn', $scope.userData);
+    //check session auth on refresh
+    if (Auth.setUser()!== "false"){
+         $scope.$emit('userOn', Auth.setUser());
     } else $scope.$emit('userOn', false);
 
-    //Log out
+    //Log out (end session)
     $scope.logout = function() {
-        $scope.authObj.$unauth();
-        $scope.authData = $scope.authObj.$getAuth();
+        $localStorage.$reset({})
         $scope.$emit('userOn', false);
     };
 
@@ -83,7 +65,6 @@ app.controller("ApplicationController", function($scope, $modal, UserDataStorage
         }
     };
 
-$scope.testerr = "hey";
     
 $scope.cartObjects = [];
     $scope.$on('cartSubmitOpen', function(event, data) {
@@ -147,10 +128,12 @@ $scope.cartObjects = [];
  * 
  */
 
-app.controller('loginController', function ($rootScope, $scope, $modalInstance, $firebase, postEmailForm, authObj, usersRef, userData) {
+app.controller('loginController', function ($rootScope, $scope, $modalInstance, $firebase, authObj, usersRef, userData, $http, dataFactory, Auth) {
     $scope.authObj = authObj;
     $scope.usersRef = usersRef;
     $scope.userData = userData;
+
+    $scope.rootPath = myLocalized.root;
 
     //Get validated emails
     var setEmails = [];
@@ -162,58 +145,45 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
         }
     });
 
+    
+
 
     //User Sign up
     $scope.signUp = function(signup) { 
-        var emailsGood;
-        for (var i = 0; i < setEmails.length; i++) {
-            if (signup.email === setEmails[i]) {
-                emailsGood = false;
-                $scope.signmsg = "The email address is already in use.";
-                break;
-            } else {
-                emailsGood = true;
-            }
+
+        if (signup.password1 !== signup.password2) {
+            $scope.signupError = "Passwords do not match."
+        }else{
+        userSignup(signup.firstname, signup.lastname,signup.email, signup.password1, signup.nonce);
         }
-        if (emailsGood) { 
 
-            if (signup.password1 !== signup.password2) {
-                $scope.signmsg = "Passwords do not match!"
-            } else {
+        function userSignup(fn, ln, em, pw, nonce) {
 
-            $scope.authObj.$createUser({
-                email: signup.email,
-                password: signup.password1
-            }).then(function() {
-                return $scope.authObj.$authWithPassword({
-                    email: signup.email,
-                    password: signup.password1
+                $scope.loginLoad = true;
+                dataFactory.userSignup(fn, ln, em, pw, nonce)
+                    .success(function (user) {                        
+                       if (user.status){
+                            //set session
+                            Auth.setUser(user);
+                            $scope.userData = user;
+
+                            //Hold if login validation is false
+                            if (user !== "false"){
+                                $rootScope.$broadcast('userOn', $scope.userData);
+                                $modalInstance.dismiss('cancel');
+                            }
+
+                        }else{
+                            $scope.signupError = user.message 
+                        }
+                        
+                        $scope.loginLoad = false;
+                        
+                })
+                    .error(function (error) {
+                        
                 });
-            }).then(function() {
-
-            $scope.signmsg = "Success!";
-            $scope.authData = $scope.authObj.$getAuth();
-            var userInfo = $firebase(usersRef.child($scope.authData.uid));
-            $scope.userData = userInfo.$asObject();
-            var usertoPush = $scope.authObj.$getAuth();
-            usersRef.child(usertoPush.uid).set({
-                firstName: signup.firstname,
-                lastName: signup.lastname,
-                email: signup.email,
-                provider: usertoPush.provider,
-                joined: new Date().getTime()
-            });
-            $rootScope.$broadcast('userOn', $scope.userData);
-            $modalInstance.dismiss('cancel');
-            
-            }).catch(function(error) {
-                console.error("Error: ", error);
-            });
-                
-
-
-            }
-        }
+            } 
     };
 
 
@@ -225,22 +195,37 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
 
     //User Sign in
     $scope.login = function (credentials) {
-         $scope.authObj.$authWithPassword({
-            email: credentials.username,
-            password: credentials.password
-        })
-        .then(function(user) {
-            //console.log('Authentication success');
+         userAuth(credentials.username, credentials.password, myLocalized.nonce);
 
-            $rootScope.$broadcast('userOn', $scope.userData);
+            function userAuth(un,pw,nonce) {
+                $scope.loginLoad = true;
+                dataFactory.userAuth(un,pw,nonce)
+                    .success(function (user) {
+                        if (user.status){
+                            //set session
+                            Auth.setUser(user);
+                            $scope.userData = user;
 
-            $modalInstance.dismiss('cancel');
-        }, function(error) {
-           // console.log('Authentication failure');
-        });       
+                            //Hold if login validation is false
+                            if (user !== "false"){
+                                $rootScope.$broadcast('userOn', $scope.userData);
+                                $modalInstance.dismiss('cancel');
+                            }
+
+                        }else{
+                            $scope.loginError = user.message 
+                        }
+                        $scope.loginLoad = false;
+                        
+
+
+                })
+                    .error(function (error) {
+                        $scope.status = 'Unable to load customer data: ' + error.message;
+                });
+            }     
       
     };
-
 
     //close modal btn
    	$scope.cancel = function () {
@@ -262,6 +247,7 @@ app.controller("mainController", function($scope, $firebase) {
     var packageData = $firebase(packages);
     
     $scope.packages = $firebase(packages).$asObject();
+
 });
 
 
@@ -272,7 +258,7 @@ app.controller("mainController", function($scope, $firebase) {
  * 
  */
 
-app.controller("catController", function($scope, $modal, $firebase, $stateParams) {
+app.controller("catController", function($scope, $modal, $firebase, $stateParams, $http) {
 
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var catRef = ref.child("packages");
@@ -280,6 +266,8 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
     var catData = $firebase(catRef.child($scope.Slug));
     $scope.catInfo = catData.$asObject();
     $scope.singleInfo = $stateParams.singleID; 
+
+    
 
 
 

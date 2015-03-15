@@ -1,76 +1,79 @@
-var app = angular.module("phoodeez", ["firebase",'ui.router',"ui.bootstrap", "ngAnimate"]);
+	var app = angular.module("phoodeez", ["firebase",'ui.router',"ui.bootstrap", "ngAnimate", "ngSanitize","ngStorage"]);
+(function(){
 
-app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    $locationProvider.html5Mode(true)
     $urlRouterProvider.otherwise("/");
+
     $stateProvider
-        .state('home', {
+    .state('home', {
             url: "/",
             views:{
                 'viewContent': {
-                    templateUrl: "app/states/main.html",
+                    templateUrl: myLocalized.partials + "main.html",
                     controller : 'mainController'
                 },
                 'viewCart': {
-                    templateUrl: "app/states/cart.html",
+                    templateUrl: myLocalized.partials + "cart.html",
                     controller : 'cartController'
                 }
             }
         })
-        .state('cat', {
+    .state('cat', {
             url: "/cat/:funnelID",
             views:{
                 'viewContent': {
-                    templateUrl: "app/states/submenu.html",
+                    templateUrl: myLocalized.partials + "submenu.html",
                     controller : 'catController'
                 },
                 'viewCart': {
-                    templateUrl: "app/states/cart.html",
+                    templateUrl: myLocalized.partials + "cart.html",
                     controller : 'cartController'
                 }
             }
         })
-        .state('package', {
+    .state('package', {
             url: "/cat/:funnelID/:singleID",
             views:{
                 'viewContent': {
-                    templateUrl: "app/states/single.html",
+                    templateUrl: myLocalized.partials + "single.html",
                     controller : 'catController'
                 },
                 'viewCart': {
-                    templateUrl: "app/states/cart.html",
+                    templateUrl: myLocalized.partials + "cart.html",
                     controller : 'cartController'
                 }
             }
 
         })
-        .state('services', {
+    .state('services', {
             url: "/services",
-            templateUrl: "app/states/services.html"
+            templateUrl: myLocalized.partials + "services.html"
         })
         .state('about', {
             url: "/about",
-            templateUrl: "app/states/about.html"
+            templateUrl: myLocalized.partials + "about.html"
         })
         .state('contact', {
             url: "/contact",
-            templateUrl: "app/states/contact.html"
+            templateUrl: myLocalized.partials + "contact.html"
         })
         .state('feedback', {
             url: "/feedback",
-            templateUrl: "app/states/feedback.html"
+            templateUrl: myLocalized.partials + "feedback.html"
         })
         .state('jobs', {
             url: "/jobs",
-            templateUrl: "app/states/jobs.html"
+            templateUrl: myLocalized.partials + "jobs.html"
         })
         .state('calendar', {
             url: "/calendar",
             views:{
                 'viewContent': {
-                    templateUrl: "app/states/calendar.html",
+                    templateUrl: myLocalized.partials + "calendar.html",
                 },
                 'viewCart': {
-                    templateUrl: "app/states/cart.html",
+                    templateUrl: myLocalized.partials + "cart.html",
                     controller : 'cartController'
                 }
             }
@@ -78,3 +81,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
 });
 
 
+})();
