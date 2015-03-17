@@ -1,11 +1,13 @@
    <h1 class="phoodeez_funnel">Hello, what are you ordering for?</h1>
     <div class="row cat_row">
-        <div ng-repeat="package in packages">
+        <div ng-repeat="category in categories">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
-                <a ui-sref="cat({ funnelID: '{{package.info.url}}' })">
-                    <div class="thumbnail option-thumb" ng-style="{'background-image':'url({{rootPath}}img/cat_pics/{{package.info.img}})'}"></div>
-                    <p>{{package.info.title}}</p>
+                <a ui-sref="cat({ funnelID: '{{category.term_id}}' })">
+                    <div class="thumbnail option-thumb" ng-style="{'background-image':'url({{category.img_path}})'}"></div>
+                    <p>{{category.name}}</p>
                 </a>
             </div>
      </div><!-- ng_repeat -->
     </div><!-- .cat_row -->
+       </footer>
+<img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

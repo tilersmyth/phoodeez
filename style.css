@@ -273,6 +273,12 @@ h1.phoodeez_funnel a span{
   padding:20px 0;
 }
 
+.pade-loader{
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0
+}
+
 
 /*Phoodeez styled modal
 -------------------------------------------------- */

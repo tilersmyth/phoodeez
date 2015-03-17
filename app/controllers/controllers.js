@@ -241,13 +241,28 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
  * 
  */
 
-app.controller("mainController", function($scope, $firebase) {
+app.controller("mainController", function($scope, $firebase, dataFactory) {
     var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
     var packages = ref.child("packages");
     var packageData = $firebase(packages);
     
     $scope.packages = $firebase(packages).$asObject();
 
+    getCategories();
+
+    function getCategories() {
+        $scope.pageLoad = true;
+         dataFactory.getCategories()
+                    .success(function (cats) {
+
+                    $scope.categories = cats;
+
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    }
 });
 
 
@@ -266,10 +281,6 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
     var catData = $firebase(catRef.child($scope.Slug));
     $scope.catInfo = catData.$asObject();
     $scope.singleInfo = $stateParams.singleID; 
-
-    
-
-
 
 
     //Open Order Modal and pass necessary vars

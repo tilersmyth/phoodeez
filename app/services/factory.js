@@ -13,8 +13,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/be_connect.php?method=signup&firstName='+fn+'&lastName='+ln+'&eMail='+em+'&passWord='+pw+'&tid='+nonce);
     };
 
-    dataFactory.getCustomer = function (id) {
-        return $http.get(urlBase + '/' + id);
+    dataFactory.getCategories= function () {
+        return $http.get(urlBase+'/product_connect.php?method=category');
     };
 
     dataFactory.insertCustomer = function (cust) {

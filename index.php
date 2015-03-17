@@ -85,9 +85,7 @@
       <div class="container">
         <a ui-sref="about">About</a> | <a ui-sref="contact">Contact</a> | <a ui-sref="feedback">Feedback</a> | <a ui-sref="jobs">Jobs</a> | <a ui-sref="home">Privacy Policy</a>
       </div>
-   </footer>
-
-<div ng-include="'http://localhost/~tylersmith/incognito/wp-content/themes/phoodeez/app/partials/modals.html'"></div>
+<div ng-include src="rootPath+'/app/partials/modals.html'"></div>
     <?php wp_footer(); ?>
   </body>
 </html>
