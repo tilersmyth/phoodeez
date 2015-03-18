@@ -17,12 +17,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/product_connect.php?method=category');
     };
 
-    dataFactory.insertCustomer = function (cust) {
-        return $http.post(urlBase, cust);
-    };
-
-    dataFactory.updateCustomer = function (cust) {
-        return $http.put(urlBase + '/' + cust.ID, cust)
+    dataFactory.getProducts = function (catID) {
+        return $http.get(urlBase+'/product_connect.php?method=product&catID='+catID);
     };
 
     dataFactory.deleteCustomer = function (id) {

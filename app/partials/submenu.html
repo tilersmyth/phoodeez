@@ -1,16 +1,16 @@
     <h1 class="phoodeez_funnel">
  		<a ui-sref="home"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a> 
- 		<span ng-show="catInfo.info.title">Recommendations for {{catInfo.info.title}}</span>
+ 		<span ng-show="products.catName">Recommendations for {{products.catName}}</span>
     </h1>
     <div class="row cat_row">
-        <div ng-repeat="subpackages in catInfo.subpackages">
+        <div ng-repeat="product in products.packages">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
-                <a ui-sref="package({ funnelID: '{{catInfo.info.url}}', singleID: '{{subpackages.VendorID}}' })">
-                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{rootPath}}img/items/{{subpackages.img}})'}">
-                    <div class="package_title">{{subpackages.Name}}</div>
+                <a ui-sref="package({ funnelID: '{{catID}}', singleID: '{{product.ID}}' })">
+                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{product.img_path}})'}">
+                    <div class="package_title">{{product.post_title}}</div>
                     </div>
-                    <p>{{subpackages.Vendor}}</p>
                 </a>
             </div>
      </div><!-- ng_repeat -->
     </div><!-- .cat_row -->
+<img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

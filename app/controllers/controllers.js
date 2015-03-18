@@ -241,12 +241,7 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
  * 
  */
 
-app.controller("mainController", function($scope, $firebase, dataFactory) {
-    var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
-    var packages = ref.child("packages");
-    var packageData = $firebase(packages);
-    
-    $scope.packages = $firebase(packages).$asObject();
+app.controller("mainController", function($scope, dataFactory) {
 
     getCategories();
 
@@ -254,9 +249,7 @@ app.controller("mainController", function($scope, $firebase, dataFactory) {
         $scope.pageLoad = true;
          dataFactory.getCategories()
                     .success(function (cats) {
-
                     $scope.categories = cats;
-
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -273,14 +266,26 @@ app.controller("mainController", function($scope, $firebase, dataFactory) {
  * 
  */
 
-app.controller("catController", function($scope, $modal, $firebase, $stateParams, $http) {
+app.controller("catController", function($scope, $modal, $firebase, $stateParams, dataFactory) {
 
-    var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
-    var catRef = ref.child("packages");
-    $scope.Slug = $stateParams.funnelID; 
-    var catData = $firebase(catRef.child($scope.Slug));
-    $scope.catInfo = catData.$asObject();
-    $scope.singleInfo = $stateParams.singleID; 
+    
+    $scope.catID = $stateParams.funnelID; 
+
+    getProducts($scope.catID);
+
+    function getProducts(catID) {
+        $scope.pageLoad = true;
+         dataFactory.getProducts(catID)
+                    .success(function (products) {
+                    $scope.products = products;
+                    console.log($scope.products);
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    }
+
 
 
     //Open Order Modal and pass necessary vars
