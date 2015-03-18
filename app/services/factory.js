@@ -21,8 +21,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/product_connect.php?method=product&catID='+catID);
     };
 
-    dataFactory.deleteCustomer = function (id) {
-        return $http.delete(urlBase + '/' + id);
+    dataFactory.getSingle = function (catID, singleID) {
+        return $http.get(urlBase+'/product_connect.php?method=single&catID='+catID+'&singleID='+singleID);
     };
 
     dataFactory.getOrders = function (id) {

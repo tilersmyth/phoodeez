@@ -266,7 +266,7 @@ app.controller("mainController", function($scope, dataFactory) {
  * 
  */
 
-app.controller("catController", function($scope, $modal, $firebase, $stateParams, dataFactory) {
+app.controller("catController", function($scope, $stateParams, dataFactory) {
 
     
     $scope.catID = $stateParams.funnelID; 
@@ -278,7 +278,37 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
          dataFactory.getProducts(catID)
                     .success(function (products) {
                     $scope.products = products;
-                    console.log($scope.products);
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    } 
+
+});
+
+
+/**
+ * Product Single State Controller
+ * Applied to cat state (submenu recommendation)
+ * 
+ * 
+ */
+
+app.controller("singleController", function($scope, $modal, $stateParams, dataFactory) {
+
+    $scope.catID = $stateParams.funnelID; 
+
+    $scope.singleID = $stateParams.singleID; 
+
+    getSingle($scope.catID, $scope.singleID);
+
+    function getSingle(catID, singleID) {
+        $scope.pageLoad = true;
+         dataFactory.getSingle(catID, singleID)
+                    .success(function (singleID) {
+                    $scope.singleData = singleID;
+                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -296,10 +326,10 @@ app.controller("catController", function($scope, $modal, $firebase, $stateParams
             controller: 'packageModalController',
             resolve: {
                 singleData: function () {
-                    return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];            
+                   // return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];            
                 },
                 packageData: function (){
-                    return $scope.catInfo.subpackages[$scope.singleInfo];
+                  //  return $scope.catInfo.subpackages[$scope.singleInfo];
                 }
             }
        });

@@ -69,4 +69,28 @@ if($method == 'product'){
 } //end Products
 
 
+//Get Single Products
+if($method == 'single'){ 
+      
+          
+      //1. Get Cat Info
+      $categoryID = $_GET["catID"];
+      $term = get_term_by( 'id', $categoryID, 'product_cat', 'ARRAY_A' );
+      $cat_name = $term['name'];    
+
+      //2. Get Package Info  
+      $singleID = $_GET["singleID"];
+      //$package_info = get_post($singleID);
+      $_pf = new WC_Product_Factory();  
+      $_product = $_pf->get_product($singleID);
+      $thumbnail_id = get_post_thumbnail_id( $singleID );
+      $image = wp_get_attachment_url( $thumbnail_id );
+
+
+      echo json_encode(array('catName' => $cat_name,'package' => $_product,'package_thumb' => $image));
+
+     exit;
+} //end Single Products
+
+
 ?>

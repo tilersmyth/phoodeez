@@ -37,7 +37,7 @@
             views:{
                 'viewContent': {
                     templateUrl: myLocalized.partials + "single.html",
-                    controller : 'catController'
+                    controller : 'singleController'
                 },
                 'viewCart': {
                     templateUrl: myLocalized.partials + "cart.html",
