@@ -33,8 +33,9 @@ app.factory('dataFactory', ['$http', function($http) {
 }]);
 
 
+//set auth session
 app.factory('Auth', function($localStorage){
-var user;
+var user; var cart;
 
 return{
     setUser : function(aUser){
@@ -43,8 +44,13 @@ return{
               x: aUser
             });
         }
-
        return(user.x)? user.x : false;
+    },
+    setCart : function(sCart){
+            cart = $localStorage.$default({
+              cart: sCart
+            });
+       return cart;
     }
   }
 })

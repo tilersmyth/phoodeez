@@ -6,20 +6,16 @@
  * 
  */
 
-app.controller("ApplicationController", function($scope, $modal, $firebaseAuth, $firebase, $location, $http, $localStorage, Auth) {
-    var ref = new Firebase("https://phoodeez2.firebaseio.com/");  
-    var usersRef = ref.child("users");
-    var userData = $firebase(usersRef);
-    var userDataArray = $firebase(usersRef).$asArray();
+ //*************LEFT OFF- made cart factory (cartSession), then realized i had to store more than just prices. need to throw into array.
+
+app.controller("ApplicationController", function($scope, $modal, $http, $localStorage, Auth) {
 
     //set the root path
     $scope.rootPath = myLocalized.root;
 
-   
     //Listener for user login
    $scope.$on('userOn', function(event, data) {
         $scope.loggedIn = data; 
-
     });
 
     //check session auth on refresh
@@ -29,7 +25,7 @@ app.controller("ApplicationController", function($scope, $modal, $firebaseAuth, 
 
     //Log out (end session)
     $scope.logout = function() {
-        $localStorage.$reset({})
+        delete $localStorage.x;
         $scope.$emit('userOn', false);
     };
 
@@ -44,12 +40,6 @@ app.controller("ApplicationController", function($scope, $modal, $firebaseAuth, 
             resolve: {
                 authObj: function () {
                   return $scope.authObj;
-                },
-                usersRef: function () {
-                  return usersRef;
-                },
-                userData: function () {
-                  return userData;
                 }
             }
        });
@@ -66,12 +56,16 @@ app.controller("ApplicationController", function($scope, $modal, $firebaseAuth, 
     };
 
     
-$scope.cartObjects = [];
+
+
+if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.cartObjects = [];}
     $scope.$on('cartSubmitOpen', function(event, data) {
+        // //cart reset
+          //delete $localStorage.cart;
+
          //Step 1. cart open   
          $scope.cartFctn(data.open);
          //Step 2. fill cart
-        
         var obj = {
             vendorName: data.vendorName,
             "cart": [{
@@ -89,10 +83,14 @@ $scope.cartObjects = [];
              if($scope.cartObjects[i].vendorName===obj.vendorName){
                  $scope.cartObjects[i].cart.push(obj.cart[0]);
                  addToArray=false;
+                 console.log($scope.cartObjects);
              } 
          }
         if(addToArray){ 
             $scope.cartObjects.push(obj);
+            $localStorage.$reset({cart: $scope.cartObjects });
+
+            
         }
 
         //console.log($scope.cartObjects);
@@ -102,7 +100,7 @@ $scope.cartObjects = [];
         var subtotal = 0; var salestax = 0; var total = 0;
         angular.forEach($scope.cartObjects, function(item) {
             angular.forEach(item.cart, function(itemSingle) {
-
+                //set cart local storage
                 subtotal += itemSingle.itemPrice * itemSingle.itemQty;
                 salestax += subtotal*.0625;
                 total = subtotal+salestax+30;
@@ -129,22 +127,10 @@ $scope.cartObjects = [];
  * 
  */
 
-app.controller('loginController', function ($rootScope, $scope, $modalInstance, $firebase, authObj, usersRef, userData, $http, dataFactory, Auth) {
+app.controller('loginController', function ($rootScope, $scope, $modalInstance, $firebase, authObj, $http, dataFactory, Auth) {
     $scope.authObj = authObj;
-    $scope.usersRef = usersRef;
-    $scope.userData = userData;
 
     $scope.rootPath = myLocalized.root;
-
-    //Get validated emails
-    var setEmails = [];
-    usersRef.once('value', function(userSnapshot) { 
-            var userSnap = userSnapshot.val(); 
-            for (var key in userSnap) {
-                //noinspection JSUnfilteredForInLoop
-                setEmails.push(userSnap[key].email);
-        }
-    });
 
     
 
