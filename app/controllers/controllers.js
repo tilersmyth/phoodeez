@@ -102,9 +102,10 @@ $scope.cartObjects = [];
         var subtotal = 0; var salestax = 0; var total = 0;
         angular.forEach($scope.cartObjects, function(item) {
             angular.forEach(item.cart, function(itemSingle) {
+
                 subtotal += itemSingle.itemPrice * itemSingle.itemQty;
                 salestax += subtotal*.0625;
-                total += subtotal+salestax+30;
+                total = subtotal+salestax+30;
             })        
         })
         $scope.subTotal =  subtotal;
@@ -354,7 +355,6 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
          dataFactory.getOption(singleData, packageData)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
-                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -394,6 +394,7 @@ app.controller("cartController", function($scope) {
         $scope.total = function() {
         var total = 0;
         angular.forEach($scope.invoice.items, function(item) {
+
             total += item.qty * item.cost;
         })
 
