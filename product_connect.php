@@ -80,7 +80,6 @@ if($method == 'single'){
 
       //2. Get Package Info  
       $singleID = $_GET["singleID"];
-      //$package_info = get_post($singleID);
       $_pf = new WC_Product_Factory();  
       $_product = $_pf->get_product($singleID);
       $thumbnail_id = get_post_thumbnail_id( $singleID );
@@ -91,6 +90,21 @@ if($method == 'single'){
 
      exit;
 } //end Single Products
+
+
+//Get Option
+if($method == 'option'){ 
+      
+      $optionID = $_GET["optionID"];
+      $packageData = $_GET["packageData"];
+      $_pf = new WC_Product_Factory();  
+      $_product = $_pf->get_product($packageData);
+      $optionData = $_product->bundle_data[$optionID];
+
+      echo json_encode(array('package' => $_product,'option' => $optionData));
+
+     exit;
+} //end Option
 
 
 ?>

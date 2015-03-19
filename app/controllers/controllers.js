@@ -308,7 +308,6 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
          dataFactory.getSingle(catID, singleID)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
-                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -319,17 +318,17 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
 
 
     //Open Order Modal and pass necessary vars
-    $scope.openOrder = function (ID) {  
+    $scope.openOrder = function (optionID, packageID) {  
         $modal.open({
             templateUrl: "package_order",
             backdrop: 'static',
             controller: 'packageModalController',
             resolve: {
                 singleData: function () {
-                   // return $scope.catInfo.subpackages[$scope.singleInfo].Options[ID];            
+                    return optionID;            
                 },
                 packageData: function (){
-                  //  return $scope.catInfo.subpackages[$scope.singleInfo];
+                    return packageID;
                 }
             }
        });
@@ -343,10 +342,28 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
  * 
  * 
  */
-app.controller("packageModalController", function($scope, $rootScope, $modalInstance, singleData, packageData) {
+app.controller("packageModalController", function($scope, $rootScope, $modalInstance, singleData, packageData, dataFactory) {
     $scope.model = { min: 1, max: 99, qty: 1};
     $scope.singleData = singleData;
     $scope.packageData = packageData;
+
+    getOption($scope.singleData, $scope.packageData);
+
+    function getOption(singleData, packageData) {
+        $scope.pageLoad = true;
+         dataFactory.getOption(singleData, packageData)
+                    .success(function (singleID) {
+                    $scope.singleData = singleID;
+                    console.log($scope.singleData);
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    }
+
+
+
 
     //close modal
     $scope.cancel = function () {

@@ -79,14 +79,14 @@
     <div class="modal-header">
     	<button type="button" class="close" ng-click="cancel()"	 aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
-        	Add Package ({{(packageData.Price*model.qty)|currency}})
+        	Add Package ({{(singleData.package.min_price*model.qty)|currency}})
         </h4>
     </div>
     <div class="modal-body package-modal-body">
     	<div class="row modal-package-desc">
     		<div class="col-sm-8">
-    			<p class="lead packageName">{{singleData.title}}</p>
-    			<p class="lead packageDesc">{{singleData.desc}}</p>
+    			<p class="lead packageName">{{singleData.option.product_title}}</p>
+    			<p class="lead packageDesc">{{singleData.option.product_description}}</p>
     		</div>
     		<div class="col-sm-4 package-order-info">
 				<div class="package-option-qty">
@@ -97,7 +97,7 @@
   					</div>
 				</div>
 				<div class="package-addtocart">
-					<button class="btn btn-primary" ng-click="cartSubmit(packageData.Vendor, packageData.VendorID, singleData.title, singleData.ID, model.qty, packageData.Price, itemNote);">Add to Cart</button>	
+					<button class="btn btn-primary" ng-click="cartSubmit(packageData.Vendor, packageData.VendorID, singleData.option.product_title, singleData.ID, model.qty, singleData.package.min_price, itemNote);">Add to Cart</button>	
 				</div>
     		</div>
     	</div>

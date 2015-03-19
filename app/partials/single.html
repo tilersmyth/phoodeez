@@ -25,7 +25,7 @@
                 <h3>Add Package Options</h3>
     			<ul ng-repeat="package in singleData.package.bundle_data"> 
     				<li>
-                        <a href="#" ng-click="openOrder(package.ID)">
+                        <a href="#" ng-click="openOrder(package.product_id, singleData.package.id)">
                             <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
                             <div class="single-package-info">
                                {{package.product_title}}

@@ -25,8 +25,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/product_connect.php?method=single&catID='+catID+'&singleID='+singleID);
     };
 
-    dataFactory.getOrders = function (id) {
-        return $http.get(urlBase + '/' + id + '/orders');
+    dataFactory.getOption = function (optionID, packageData) {
+        return $http.get(urlBase+'/product_connect.php?method=option&optionID='+optionID+'&packageData='+packageData);
     };
 
     return dataFactory;
