@@ -28,7 +28,8 @@
 				        				<div class="sub_item_name">{{cartList.itemName}}</div>
 				        				<div class="sub_item_note">{{cartList.itemNotes}}</div>
 				        				<div class="sub_item_edit-delete">
-				        					<a href="#">Edit</a> | <a href="#">Delete</a>
+				        					<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'edit')">Edit</a> | 
+				        					<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'delete')">Delete</a>
 				        				</div>
 				        			</div>
 				        		</div>

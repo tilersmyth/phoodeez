@@ -6,8 +6,6 @@
  * 
  */
 
- //*************LEFT OFF- made cart factory (cartSession), then realized i had to store more than just prices. need to throw into array.
-
 app.controller("ApplicationController", function($scope, $modal, $http, $localStorage, Auth) {
 
     //set the root path
@@ -57,19 +55,16 @@ app.controller("ApplicationController", function($scope, $modal, $http, $localSt
 
     
 
-
+//if cart from session
 if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.cartObjects = [];}
     $scope.$on('cartSubmitOpen', function(event, data) {
-        // //cart reset
-          //delete $localStorage.cart;
-
          //Step 1. cart open   
          $scope.cartFctn(data.open);
          //Step 2. fill cart
         var obj = {
+            packageID: data.packageID,
             vendorName: data.vendorName,
             "cart": [{
-              packageID: data.packageID,
               itemName: data.itemName,
               itemID: data.itemID,
               itemQty: data.itemQty,
@@ -79,18 +74,17 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
 
               
          var addToArray=true;
+         //if vendorName exists
          for(var i=0;i<$scope.cartObjects.length;i++){
              if($scope.cartObjects[i].vendorName===obj.vendorName){
                  $scope.cartObjects[i].cart.push(obj.cart[0]);
                  addToArray=false;
-                 console.log($scope.cartObjects);
              } 
          }
+        //if empty array
         if(addToArray){ 
             $scope.cartObjects.push(obj);
             $localStorage.$reset({cart: $scope.cartObjects });
-
-            
         }
 
         //console.log($scope.cartObjects);
@@ -116,6 +110,23 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
          
     }
 
+
+//testing purposes only
+$scope.debugDelete = function () { 
+         delete $localStorage.cart;
+    }
+
+//Cart Item Action (edit/delete)
+  $scope.cartitemAction = function (packageID, optionID, action) { 
+    for(var i=0;i<Auth.setCart().cart.length;i++){
+        if (Auth.setCart().cart[i].packageID == packageID){
+                for(var y=0;y<Auth.setCart().cart[i].cart.length;y++){
+                    if (Auth.setCart().cart[i].cart[y].$$hashKey == optionID)
+                        console.log(action);
+                }
+        }
+    }
+  }  
 
 
 });
@@ -360,8 +371,8 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
     //data to pass: 1. VendorName, packageID, itemID, Qty, Price, Notes   
 
     //cart submit action
-    $scope.cartSubmit = function (vendorName, packageID, itemName, itemID, itemQty, itemPrice, itemNotes) {
-        var cartAction = { open: "openCart", vendorName: vendorName, packageID: packageID, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
+    $scope.cartSubmit = function (packageID, vendorName, itemName, itemID, itemQty, itemPrice, itemNotes) {
+        var cartAction = { open: "openCart", packageID:packageID, vendorName: vendorName, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
         $modalInstance.dismiss('cancel');
         $rootScope.$broadcast('cartSubmitOpen', cartAction);
 
