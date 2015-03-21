@@ -20,6 +20,7 @@
 					<div ng-repeat="cartItem in cartObjects">
 				        Order from <b>{{cartItem.vendorName}}</b>
 				        <div class="row cart_container" ng-repeat="cartList in cartItem.cart">
+				        	<div class="cart_item_wrapper" ng-hide="cartitemDelete">
 				        		<div class="col-xs-9">
 				        			<div class="cart_item_qty">
 				        				<input type="number" ng-pattern="/^[0-9]{1,2}$/" min="0" max="99" ng-model="cartList.itemQty" value="{{cartList.itemQty}}">
@@ -29,14 +30,22 @@
 				        				<div class="sub_item_note">{{cartList.itemNotes}}</div>
 				        				<div class="sub_item_edit-delete">
 				        					<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'edit')">Edit</a> | 
-				        					<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'delete')">Delete</a>
+				        					<a href="#" ng-click="cartitemDelete = true">Delete</a>
 				        				</div>
 				        			</div>
 				        		</div>
 				        		<div class="col-xs-3">
 				        			<div class="cart_item_price">{{(cartList.itemQty * cartList.itemPrice)|currency}}</div>
 				        		</div>
+				        </div><!-- .cart_item_wrapper -->	
+				        	<div class="cart_item_delete" ng-show="cartitemDelete">
+				        		<b>Delete {{cartList.itemName}} ({{cartList.itemQty}})?</b> 
+				        			<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'delete')">Yay</a> | <a href="#" ng-click="cartitemDelete = false">Nay</a>
+				        	</div><!-- .cart_item_delete -->
 				        </div><!-- .cart_container -->
+
+
+				        
 				    </div>	<!-- cartObjects -->
 				    <div class="cart_sum">
 				    <hr>	

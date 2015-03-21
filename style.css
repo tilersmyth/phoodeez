@@ -181,6 +181,14 @@ a.phoodeez-brand p{
   outline: none !important;
 }
 
+
+.cart_item_delete{
+  padding: 15px;
+  margin:0 15px; 
+  background: #f2dede;
+  text-align: center;
+}
+
 .short_notice{
   text-align: center;
   text-transform: uppercase;

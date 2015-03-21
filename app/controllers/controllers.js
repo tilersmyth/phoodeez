@@ -91,7 +91,6 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
 
         //update cart
         if (data.action){
-
             angular.forEach($scope.cartObjects,function(value,index){
                 if($scope.cartObjects[index].packageID===data.packageID){ 
                     angular.forEach($scope.cartObjects[index].cart,function(subValue,subIndex){
@@ -126,27 +125,59 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
          
     }
 
-
-//testing purposes only
-$scope.debugDelete = function () { 
-         delete $localStorage.cart;
-    }
-
 //Cart Item Action (edit/delete)
   $scope.cartitemAction = function (packageID, optionID, action) { 
-    for(var i=0;i<Auth.setCart().cart.length;i++){
-        if (Auth.setCart().cart[i].packageID == packageID){
-                for(var y=0;y<Auth.setCart().cart[i].cart.length;y++){
-                    if (Auth.setCart().cart[i].cart[y].$$hashKey == optionID)
+        
+        angular.forEach(Auth.setCart().cart,function(value,index){
+            if(Auth.setCart().cart[index].packageID===packageID){ 
+                angular.forEach(Auth.setCart().cart[index].cart,function(subValue,subIndex){
+                    if (Auth.setCart().cart[index].cart[subIndex].$$hashKey == optionID){
                         if(action=='edit'){
-                            var cartData = {id:packageID, desc:Auth.setCart().cart[i].packageDesc, cart:Auth.setCart().cart[i].cart[y]};
+                            var cartData = {id:packageID, desc:Auth.setCart().cart[index].packageDesc, cart:Auth.setCart().cart[index].cart[subIndex]};
                             $scope.$broadcast('cartEdit', cartData);
                         }
-                }
-        }
-    }
+                        if(action=='delete'){
+                             //delete items   
+                             Auth.setCart().cart[index].cart.splice(subIndex, 1);
+                             //delete package if last item
+                             if (Auth.setCart().cart[index].cart.length<1){
+                                Auth.setCart().cart.splice(index, 1);
+                             }
+                        } 
+                    }
+                })
+            }
+        })
+
+
+
+
+
+
+
+
+
+    // for(var i=0;i<Auth.setCart().cart.length;i++){
+    //     if (Auth.setCart().cart[i].packageID == packageID){
+    //             for(var y=0;y<Auth.setCart().cart[i].cart.length;y++){
+    //                 if (Auth.setCart().cart[i].cart[y].$$hashKey == optionID)
+    //                     if(action=='edit'){
+    //                         var cartData = {id:packageID, desc:Auth.setCart().cart[i].packageDesc, cart:Auth.setCart().cart[i].cart[y]};
+    //                         $scope.$broadcast('cartEdit', cartData);
+    //                     }
+    //                     if(action=='delete'){
+    //                         console.log(optionID);
+    //                     }
+    //             }
+    //     }
+    // }
   }  
 
+
+
+  $scope.deleteVerify = function () { 
+        $scope.deleteItem = true;
+  }
 
 });
 
@@ -157,7 +188,7 @@ $scope.debugDelete = function () {
  * 
  */
 
-app.controller('loginController', function ($rootScope, $scope, $modalInstance, $firebase, authObj, $http, dataFactory, Auth) {
+app.controller('loginController', function ($rootScope, $scope, $modalInstance, authObj, $http, dataFactory, Auth) {
     $scope.authObj = authObj;
 
     $scope.rootPath = myLocalized.root;
