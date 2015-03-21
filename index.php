@@ -64,7 +64,7 @@
             </li>
 
             <li id="cart-dropdown" ng-class="{active: cartToggle}">
-               <a href="#" ng-click="cartFctn()" class="cart_dropdown">
+               <a href="#" ng-click="cartFctn()" class="cart_dropdown" ng-class="{cartTotalcontent: total().total>0}">
                <div class="cartTotal" ng-show="total().total>0">{{ total().total | currency }}</div>
                <span class="glyphicon glyphicon-shopping-cart custom-cart"></span></a>
             </li>

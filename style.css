@@ -135,6 +135,22 @@ a.phoodeez-brand p{
  font-size: 25px;  
 }
 
+.navbar-nav-phoodeez li a.cartTotalcontent{
+  padding-top: 21px;
+  padding-bottom: 21px;
+  position: relative;
+}
+
+.cartTotalcontent .custom-cart{
+  position: absolute;
+  right: 10px;
+  top:17px;
+}
+
+.cartTotalcontent .cartTotal{
+  padding-right: 30px;
+}
+
 .cart_item_qty{
   width:50px;
   float: left !important;
