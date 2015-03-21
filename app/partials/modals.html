@@ -79,25 +79,36 @@
     <div class="modal-header">
     	<button type="button" class="close" ng-click="cancel()"	 aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">
-        	Add Package ({{(singleData.package.min_price*model.qty)|currency}})
+        	<span ng-if="!cartAction">Add Package ({{(singleData.package.min_price*model.qty)|currency}})</span>
+        	<span ng-if="cartAction">Update Package ({{(cartAction.cart.itemPrice*model.qty)|currency}})</span>
+        
         </h4>
     </div>
     <div class="modal-body package-modal-body">
     	<div class="row modal-package-desc">
     		<div class="col-sm-8">
-    			<p class="lead packageName">{{singleData.option.product_title}}</p>
-    			<p class="lead packageDesc">{{singleData.option.product_description}}</p>
+    			<p class="lead packageName">
+    			{{singleData.option.product_title}}
+    			{{cartAction.cart.itemName}}
+    			</p>
+    			<p class="lead packageDesc">
+    			{{singleData.option.product_description}}
+    			{{cartAction.desc}}
+    			</p>
     		</div>
     		<div class="col-sm-4 package-order-info">
 				<div class="package-option-qty">
 					<div class="form-group">
     					<button class="btn btn-primary" ng-click="model.qty = model.qty - 1" ng-disabled="model.qty <= model.min"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
-  						<input type="text" class="form-control" ng-model="model.qty" value="{{model.qty}}">
+  						<input type="text" class="form-control" ng-model="model.qty" value="{{ cartAction ? cartAction.cart.itemQty : model.qty}}">
   						<button class="btn btn-primary" ng-click="model.qty = model.qty + 1" ng-disabled="model.qty >= model.max"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
   					</div>
 				</div>
 				<div class="package-addtocart">
-					<button class="btn btn-primary" ng-click="cartSubmit(singleData.package.id, singleData.package.post.post_excerpt, singleData.option.product_title, singleData.option.product_id, model.qty, singleData.package.min_price, itemNote);">Add to Cart</button>	
+
+					<button ng-if="!cartAction" class="btn btn-primary" ng-click="cartSubmit(singleData.package.id, singleData.package.post.post_excerpt, singleData.option.product_description, singleData.option.product_title, singleData.option.product_id, model.qty, singleData.package.min_price, itemNote);">Add to Cart</button>	
+
+					<button ng-if="cartAction" class="btn btn-primary" ng-click="cartUpdate(cartAction.id, cartAction.cart.$$hashKey, model.qty, itemNote);">Update Item</button>
 				</div>
     		</div>
     	</div>
@@ -112,7 +123,7 @@
     		</ul>	
     		<hr>    		
     	</div>
-    	<div class="package-options-wrapper">
+    	<div class="package-options-wrapper" ng-init="itemNote=cartAction.cart.itemNotes">
 			<p>Item details (optional):</p>
 			<textarea class="form-control" ng-model="itemNote" rows="2" placeholder="E.g. Hold the mayo"></textarea>
     	</div>

@@ -60,10 +60,12 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
     $scope.$on('cartSubmitOpen', function(event, data) {
          //Step 1. cart open   
          $scope.cartFctn(data.open);
-         //Step 2. fill cart
+         //Step 2. fill cart (if not updating)
+        if (!data.action){
         var obj = {
             packageID: data.packageID,
             vendorName: data.vendorName,
+            packageDesc:data.packageDesc,
             "cart": [{
               itemName: data.itemName,
               itemID: data.itemID,
@@ -85,9 +87,23 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
         if(addToArray){ 
             $scope.cartObjects.push(obj);
             $localStorage.$reset({cart: $scope.cartObjects });
+        }}
+
+        //update cart
+        if (data.action){
+
+            angular.forEach($scope.cartObjects,function(value,index){
+                if($scope.cartObjects[index].packageID===data.packageID){ 
+                    angular.forEach($scope.cartObjects[index].cart,function(subValue,subIndex){
+                        if($scope.cartObjects[index].cart[subIndex].$$hashKey===data.itemID){ 
+                           $scope.cartObjects[index].cart[subIndex].itemQty = data.itemQty;
+                           $scope.cartObjects[index].cart[subIndex].itemNotes = data.itemNotes;
+                        }
+                    })
+                }
+            })
         }
 
-        //console.log($scope.cartObjects);
     })
 
     $scope.total = function() { 
@@ -122,7 +138,10 @@ $scope.debugDelete = function () {
         if (Auth.setCart().cart[i].packageID == packageID){
                 for(var y=0;y<Auth.setCart().cart[i].cart.length;y++){
                     if (Auth.setCart().cart[i].cart[y].$$hashKey == optionID)
-                        console.log(action);
+                        if(action=='edit'){
+                            var cartData = {id:packageID, desc:Auth.setCart().cart[i].packageDesc, cart:Auth.setCart().cart[i].cart[y]};
+                            $scope.$broadcast('cartEdit', cartData);
+                        }
                 }
         }
     }
@@ -314,9 +333,15 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
     }
 
 
+    //Listener to open cart modal for editing
+   $scope.$on('cartEdit', function(event, data) {
+        $scope.openOrder('','',data);
+    });
+
+
 
     //Open Order Modal and pass necessary vars
-    $scope.openOrder = function (optionID, packageID) {  
+    $scope.openOrder = function (optionID, packageID, editCart) {  
         $modal.open({
             templateUrl: "package_order",
             backdrop: 'static',
@@ -327,6 +352,9 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
                 },
                 packageData: function (){
                     return packageID;
+                },
+                cartAction: function (){
+                    return editCart;
                 }
             }
        });
@@ -340,11 +368,13 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
  * 
  * 
  */
-app.controller("packageModalController", function($scope, $rootScope, $modalInstance, singleData, packageData, dataFactory) {
+app.controller("packageModalController", function($scope, $rootScope, $modalInstance, singleData, packageData, dataFactory, cartAction) {
     $scope.model = { min: 1, max: 99, qty: 1};
     $scope.singleData = singleData;
     $scope.packageData = packageData;
+    $scope.cartAction = cartAction;
 
+    if (!cartAction)
     getOption($scope.singleData, $scope.packageData);
 
     function getOption(singleData, packageData) {
@@ -359,24 +389,23 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
 
     }
 
-
-
-
     //close modal
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
 
-
-    //data to pass: 1. VendorName, packageID, itemID, Qty, Price, Notes   
-
     //cart submit action
-    $scope.cartSubmit = function (packageID, vendorName, itemName, itemID, itemQty, itemPrice, itemNotes) {
-        var cartAction = { open: "openCart", packageID:packageID, vendorName: vendorName, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
+    $scope.cartSubmit = function (packageID, vendorName, packageDesc, itemName, itemID, itemQty, itemPrice, itemNotes) {
+        var cartAction = { open: "openCart", packageID:packageID, vendorName: vendorName, packageDesc:packageDesc, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
         $modalInstance.dismiss('cancel');
         $rootScope.$broadcast('cartSubmitOpen', cartAction);
+    }
 
-
+    //cart update action
+    $scope.cartUpdate = function (packageID, itemID, itemQty, itemNotes) {
+        var cartAction = { open: "openCart", action:"update", packageID:packageID, itemID:itemID, itemQty:itemQty, itemNotes:itemNotes};
+        $modalInstance.dismiss('cancel');
+        $rootScope.$broadcast('cartSubmitOpen', cartAction);
     }
 
 });
