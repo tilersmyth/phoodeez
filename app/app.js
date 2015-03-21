@@ -46,6 +46,20 @@
             }
 
         })
+    .state('checkout', {
+            url: "/checkout/:cartID",
+            views:{
+                'viewContent': {
+                    templateUrl: myLocalized.partials + "checkout.html",
+                    controller : 'checkoutController'
+                },
+                'viewCart': {
+                    templateUrl: myLocalized.partials + "cart.html",
+                    controller : 'cartController'
+                }
+            }
+
+        })
     .state('services', {
             url: "/services",
             templateUrl: myLocalized.partials + "services.html"
@@ -74,7 +88,7 @@
                 },
                 'viewCart': {
                     templateUrl: myLocalized.partials + "cart.html",
-                    controller : 'cartController'
+                    controller : 'calendarController'
                 }
             }
         });

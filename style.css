@@ -489,7 +489,7 @@ p.package-options-desc{
   color: #ecf0f1
 }
 
-.package_options_wrapper{
+.package_options_wrapper, .checkout_wrapper{
   background-color: #ecf0f1;
   padding: 20px 0;
 }
@@ -571,6 +571,13 @@ p.package-options-desc{
  .package_options_list a:hover .single-add-icon{
   font-size: 20px;
  }
+
+ /*Checkout Page
+-------------------------------------------------- */
+.checkout_wrapper{
+  margin-top: 50px;
+}
+
 
 
 /*Responsive Layouts

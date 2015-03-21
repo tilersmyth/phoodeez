@@ -1,0 +1,14 @@
+    <div class="row" ng-init="cartFctn(true)">
+        <div class="col-sm-6 col-sm-offset-1">
+                <div class="checkout_wrapper">
+                    <h2>Checkout</h2>
+
+                    <i>this is after auth, contact, payment</i><br><br><br><br>
+                    <button class="btn btn-primary" ng-click="completeCheckout(cartID, 'confirm')">confirm</button>
+                    <button class="btn btn-danger" ng-click="completeCheckout(cartID, 'delete')">delete</button>
+
+                    <div>{{checkout}}</div>
+                </div>
+        </div>
+    </div><!-- .row -->
+<img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

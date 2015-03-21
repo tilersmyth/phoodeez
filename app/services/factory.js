@@ -6,27 +6,35 @@ app.factory('dataFactory', ['$http', function($http) {
     var dataFactory = {};
 
     dataFactory.userAuth = function (un, pw, nonce) {
-        return $http.get(urlBase+'/be_connect.php?method=login&username='+un+'&password='+pw+'&tid='+nonce);
+        return $http.get(urlBase+'/server/be_connect.php?method=login&username='+un+'&password='+pw+'&tid='+nonce);
     };
 
     dataFactory.userSignup = function (fn, ln, em, pw, nonce) {
-        return $http.get(urlBase+'/be_connect.php?method=signup&firstName='+fn+'&lastName='+ln+'&eMail='+em+'&passWord='+pw+'&tid='+nonce);
+        return $http.get(urlBase+'/server/be_connect.php?method=signup&firstName='+fn+'&lastName='+ln+'&eMail='+em+'&passWord='+pw+'&tid='+nonce);
     };
 
     dataFactory.getCategories= function () {
-        return $http.get(urlBase+'/product_connect.php?method=category');
+        return $http.get(urlBase+'/server/product_connect.php?method=category');
     };
 
     dataFactory.getProducts = function (catID) {
-        return $http.get(urlBase+'/product_connect.php?method=product&catID='+catID);
+        return $http.get(urlBase+'/server/product_connect.php?method=product&catID='+catID);
     };
 
     dataFactory.getSingle = function (catID, singleID) {
-        return $http.get(urlBase+'/product_connect.php?method=single&catID='+catID+'&singleID='+singleID);
+        return $http.get(urlBase+'/server/product_connect.php?method=single&catID='+catID+'&singleID='+singleID);
     };
 
     dataFactory.getOption = function (optionID, packageData) {
-        return $http.get(urlBase+'/product_connect.php?method=option&optionID='+optionID+'&packageData='+packageData);
+        return $http.get(urlBase+'/server/product_connect.php?method=option&optionID='+optionID+'&packageData='+packageData);
+    };
+
+    dataFactory.initiateCheckout = function (cartData) {
+        return $http.post(urlBase+'/server/checkout_connect.php?method=initiate', cartData);
+    };
+
+    dataFactory.completeCheckout = function (cartData, action) {
+        return $http.post(urlBase+'/server/checkout_connect.php?method=complete&cartID='+cartData+'&action='+action);
     };
 
     return dataFactory;

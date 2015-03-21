@@ -9,10 +9,10 @@ if ( !isset($wp_did_header) ) {
 
 	$wp_did_header = true;
 
-	include '../../../wp-load.php';
+	include '../../../../wp-load.php';
 
 	wp();
 
-	include '../../../wp-includes/template-loader.php';
+	include '../../../../wp-includes/template-loader.php';
 
 }

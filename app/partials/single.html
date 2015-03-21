@@ -1,5 +1,5 @@
 	
-    <div class="row" ng-show="singleData">
+    <div class="row" ng-show="singleData" ng-init="cartFctn(true)">
     <div class="col-sm-6 col-sm-offset-1">
     	<div class="backlink"><a ui-sref="cat({funnelID: '{{catID}}'})"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to {{singleData.catName}} options</a></div>
 
@@ -38,5 +38,4 @@
     	</div><!-- .package_options_wrapper -->
     </div>
     </div><!-- .row -->
-<a href="" ng-click="debugDelete();">debug delete</a>    
 <img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

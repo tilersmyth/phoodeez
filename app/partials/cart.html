@@ -10,10 +10,10 @@
 				<div class="short_notice" ng-show="totalTotal<100">{{(100-totalTotal)|currency}} required to continue</div>
 				<div class="cart_action">
 					<div class="btn-group">
-						<button class="btn btn-danger btn-lg" ng-disabled="totalTotal<100" type="submit">Add to Calendar</button>
+						<button class="btn btn-danger btn-lg" ng-disabled="totalTotal<10" type="submit">Add to Calendar</button>
 					</div>
 					<div class="btn-group">
-						<button class="btn btn-primary btn-lg" ng-disabled="totalTotal<100" type="submit">Checkout</button>
+						<button ng-click="startCheckout(cartObjects, loggedIn.id)" class="btn btn-primary btn-lg" ng-disabled="totalTotal<10" type="submit">Checkout</button>
 					</div>
 				<hr>
 				</div><!-- .cart_action -->
@@ -39,7 +39,7 @@
 				        		</div>
 				        </div><!-- .cart_item_wrapper -->	
 				        	<div class="cart_item_delete" ng-show="cartitemDelete">
-				        		<b>Delete {{cartList.itemName}} ({{cartList.itemQty}})?</b> 
+				        		<b>Remove {{cartList.itemName}} ({{cartList.itemQty}})?</b> 
 				        			<a href="#" ng-click="cartitemAction(cartItem.packageID,cartList.$$hashKey,'delete')">Yay</a> | <a href="#" ng-click="cartitemDelete = false">Nay</a>
 				        	</div><!-- .cart_item_delete -->
 				        </div><!-- .cart_container -->

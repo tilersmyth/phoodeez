@@ -16,6 +16,8 @@ app.controller("ApplicationController", function($scope, $modal, $http, $localSt
         $scope.loggedIn = data; 
     });
 
+
+
     //check session auth on refresh
     if (Auth.setUser()!== "false"){
          $scope.$emit('userOn', Auth.setUser());
@@ -42,6 +44,7 @@ app.controller("ApplicationController", function($scope, $modal, $http, $localSt
             }
        });
     }; 
+
 
     //Cart Action Start
     $scope.cartToggle = false;
@@ -125,8 +128,9 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
          
     }
 
+
 //Cart Item Action (edit/delete)
-  $scope.cartitemAction = function (packageID, optionID, action) { 
+  $scope.cartitemAction = function (packageID, optionID, action) {  
         
         angular.forEach(Auth.setCart().cart,function(value,index){
             if(Auth.setCart().cart[index].packageID===packageID){ 
@@ -134,7 +138,7 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
                     if (Auth.setCart().cart[index].cart[subIndex].$$hashKey == optionID){
                         if(action=='edit'){
                             var cartData = {id:packageID, desc:Auth.setCart().cart[index].packageDesc, cart:Auth.setCart().cart[index].cart[subIndex]};
-                            $scope.$broadcast('cartEdit', cartData);
+                             $scope.openOrder('','',cartData);
                         }
                         if(action=='delete'){
                              //delete items   
@@ -148,29 +152,6 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
                 })
             }
         })
-
-
-
-
-
-
-
-
-
-    // for(var i=0;i<Auth.setCart().cart.length;i++){
-    //     if (Auth.setCart().cart[i].packageID == packageID){
-    //             for(var y=0;y<Auth.setCart().cart[i].cart.length;y++){
-    //                 if (Auth.setCart().cart[i].cart[y].$$hashKey == optionID)
-    //                     if(action=='edit'){
-    //                         var cartData = {id:packageID, desc:Auth.setCart().cart[i].packageDesc, cart:Auth.setCart().cart[i].cart[y]};
-    //                         $scope.$broadcast('cartEdit', cartData);
-    //                     }
-    //                     if(action=='delete'){
-    //                         console.log(optionID);
-    //                     }
-    //             }
-    //     }
-    // }
   }  
 
 
@@ -178,6 +159,26 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
   $scope.deleteVerify = function () { 
         $scope.deleteItem = true;
   }
+
+  //Open Order Modal and pass necessary vars
+    $scope.openOrder = function (optionID, packageID, editCart) {  
+        $modal.open({
+            templateUrl: "package_order",
+            backdrop: 'static',
+            controller: 'packageModalController',
+            resolve: {
+                singleData: function () {
+                    return optionID;            
+                },
+                packageData: function (){
+                    return packageID;
+                },
+                cartAction: function (){
+                    return editCart;
+                }
+            }
+       });
+    }; 
 
 });
 
@@ -343,10 +344,9 @@ app.controller("catController", function($scope, $stateParams, dataFactory) {
  * 
  */
 
-app.controller("singleController", function($scope, $modal, $stateParams, dataFactory) {
+app.controller("singleController", function($scope, $rootScope, $modal, $stateParams, dataFactory) {
 
     $scope.catID = $stateParams.funnelID; 
-
     $scope.singleID = $stateParams.singleID; 
 
     getSingle($scope.catID, $scope.singleID);
@@ -362,35 +362,6 @@ app.controller("singleController", function($scope, $modal, $stateParams, dataFa
                 });
 
     }
-
-
-    //Listener to open cart modal for editing
-   $scope.$on('cartEdit', function(event, data) {
-        $scope.openOrder('','',data);
-    });
-
-
-
-    //Open Order Modal and pass necessary vars
-    $scope.openOrder = function (optionID, packageID, editCart) {  
-        $modal.open({
-            templateUrl: "package_order",
-            backdrop: 'static',
-            controller: 'packageModalController',
-            resolve: {
-                singleData: function () {
-                    return optionID;            
-                },
-                packageData: function (){
-                    return packageID;
-                },
-                cartAction: function (){
-                    return editCart;
-                }
-            }
-       });
-    }; 
-
 });
 
 /**
@@ -447,15 +418,80 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
  * 
  * 
  */
-app.controller("cartController", function($scope) {
-        $scope.total = function() {
+app.controller("cartController", function($scope, $location, dataFactory) {
+    $scope.total = function() {
         var total = 0;
         angular.forEach($scope.invoice.items, function(item) {
-
             total += item.qty * item.cost;
         })
-
         return total;
     }
 
+    $scope.startCheckout = function(cartData, userID) {
+        
+        var cartInfo = {cartData:cartData, userID:userID};
+        initiateCheckout(cartInfo);
+    }
+
+
+
+    function initiateCheckout(cartData) {
+         dataFactory.initiateCheckout(cartData)
+                    .success(function (cartData) {
+                    $location.path( "/checkout/"+cartData );
+                })
+                    .error(function (error) {
+                });
+
+    }
+
+
 });
+
+
+/**
+ * Checkout Controller
+ * 
+ * 
+ * 
+ */
+app.controller("checkoutController", function($scope, $stateParams, dataFactory) {
+    $scope.cartID = $stateParams.cartID;     
+
+    $scope.completeCheckout = function(checkout, action) {
+
+         dataFactory.completeCheckout(checkout, action)
+                    .success(function (checkout) {
+                    $scope.checkout = checkout;
+        
+                })
+                    .error(function (error) {
+                });
+
+    }
+
+
+});
+
+
+/**
+ * Calendar Controller
+ * 
+ * 
+ * 
+ */
+app.controller("calendarController", function($rootScope, $location, Auth) {
+    //Lil auth action
+    if(Auth.setUser() == false){
+        $location.path('/');
+    }
+
+
+});
+
+
+
+
+
+
+
