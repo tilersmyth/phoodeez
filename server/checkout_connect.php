@@ -35,6 +35,37 @@ if($method == 'initiate'){
   } else {
 
     add_post_meta($order_id, '_customer_user', $request->userID, true);
+    add_post_meta($order_id, '_order_total', $request->total, true);
+
+   
+
+    foreach ($request->cartData as $cartData):
+      foreach ($cartData->cart as $itemData):
+
+            $itemData->itemID;
+
+           $item_id = wc_add_order_item( $order_id, array(
+            'order_item_name'       => $itemData->itemName,
+            'order_item_type'       => 'line_item'
+            ) );
+
+
+           if ( $item_id ) {
+
+              // add item meta data
+              wc_add_order_item_meta( $item_id, '_qty', $itemData->itemQty ); 
+              wc_add_order_item_meta( $item_id, '_product_id', $itemData->itemID );
+              wc_add_order_item_meta( $item_id, '_variation_id', '' );
+              wc_add_order_item_meta( $item_id, '_line_subtotal', wc_format_decimal( $itemData->itemPrice*$itemData->itemQty ) );
+              wc_add_order_item_meta( $item_id, '_line_total', wc_format_decimal( $itemData->itemPrice*$itemData->itemQty ) );
+              wc_add_order_item_meta( $item_id, '_line_tax', wc_format_decimal( 0 ) );
+              wc_add_order_item_meta( $item_id, '_line_subtotal_tax', wc_format_decimal( 0 ) );
+
+            }
+
+
+        endforeach;
+    endforeach;
 
   }
  
@@ -49,6 +80,8 @@ if($method == 'complete'){
   $checkoutAction = $_GET["action"];
 
   if($checkoutAction == 'confirm'){
+
+    
     $update_checkout = array(
         'ID'           => $cartID,
         'post_status' => 'wc-completed'
@@ -62,6 +95,6 @@ if($method == 'complete'){
   } 
 
 
-   echo json_encode($checkoutAction);
+   echo json_encode($cartID);
   exit;
 }

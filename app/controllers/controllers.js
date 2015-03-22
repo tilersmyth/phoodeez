@@ -418,7 +418,7 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
  * 
  * 
  */
-app.controller("cartController", function($scope, $location, dataFactory) {
+app.controller("cartController", function($scope, $location, dataFactory, $localStorage) {
     $scope.total = function() {
         var total = 0;
         angular.forEach($scope.invoice.items, function(item) {
@@ -427,9 +427,9 @@ app.controller("cartController", function($scope, $location, dataFactory) {
         return total;
     }
 
-    $scope.startCheckout = function(cartData, userID) {
+    $scope.startCheckout = function(totalTotal, cartData, userID) {
         
-        var cartInfo = {cartData:cartData, userID:userID};
+        var cartInfo = {total:totalTotal, cartData:cartData, userID:userID};
         initiateCheckout(cartInfo);
     }
 
@@ -438,12 +438,19 @@ app.controller("cartController", function($scope, $location, dataFactory) {
     function initiateCheckout(cartData) {
          dataFactory.initiateCheckout(cartData)
                     .success(function (cartData) {
+                        console.log(cartData);
                     $location.path( "/checkout/"+cartData );
                 })
                     .error(function (error) {
                 });
 
     }
+
+     //Listener to clear cart
+   $scope.$on('clearCart', function(event, data) {
+        $scope.cartObjects = [];
+        delete $localStorage.cart;
+    });
 
 
 });
@@ -455,15 +462,17 @@ app.controller("cartController", function($scope, $location, dataFactory) {
  * 
  * 
  */
-app.controller("checkoutController", function($scope, $stateParams, dataFactory) {
-    $scope.cartID = $stateParams.cartID;     
+app.controller("checkoutController", function($scope, $stateParams, dataFactory, $rootScope) {
+    $scope.cartID = $stateParams.cartID; 
 
     $scope.completeCheckout = function(checkout, action) {
+
+
 
          dataFactory.completeCheckout(checkout, action)
                     .success(function (checkout) {
                     $scope.checkout = checkout;
-        
+                    $rootScope.$broadcast('clearCart', true);
                 })
                     .error(function (error) {
                 });

@@ -13,7 +13,7 @@
 						<button class="btn btn-danger btn-lg" ng-disabled="totalTotal<10" type="submit">Add to Calendar</button>
 					</div>
 					<div class="btn-group">
-						<button ng-click="startCheckout(cartObjects, loggedIn.id)" class="btn btn-primary btn-lg" ng-disabled="totalTotal<10" type="submit">Checkout</button>
+						<button ng-click="startCheckout((totalTotal|number:2), cartObjects, loggedIn.id)" class="btn btn-primary btn-lg" ng-disabled="totalTotal<10" type="submit">Checkout</button>
 					</div>
 				<hr>
 				</div><!-- .cart_action -->
