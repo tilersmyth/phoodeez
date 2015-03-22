@@ -56,9 +56,9 @@ return{
     },
     setCart : function(sCart){
             cart = $localStorage.$default({
-              cart: sCart
+              y: sCart
             });
-       return cart;
+       return cart.y;
     }
   }
 })

@@ -56,10 +56,8 @@ app.controller("ApplicationController", function($scope, $modal, $http, $localSt
         }
     };
 
-    
-
 //if cart from session
-if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.cartObjects = [];}
+if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects = [];}
     $scope.$on('cartSubmitOpen', function(event, data) {
          //Step 1. cart open   
          $scope.cartFctn(data.open);
@@ -89,7 +87,7 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
         //if empty array
         if(addToArray){ 
             $scope.cartObjects.push(obj);
-            $localStorage.$reset({cart: $scope.cartObjects });
+            Auth.setCart($scope.cartObjects);
         }}
 
         //update cart
@@ -132,20 +130,20 @@ if(Auth.setCart().cart){$scope.cartObjects = Auth.setCart().cart}else{$scope.car
 //Cart Item Action (edit/delete)
   $scope.cartitemAction = function (packageID, optionID, action) {  
         
-        angular.forEach(Auth.setCart().cart,function(value,index){
-            if(Auth.setCart().cart[index].packageID===packageID){ 
-                angular.forEach(Auth.setCart().cart[index].cart,function(subValue,subIndex){
-                    if (Auth.setCart().cart[index].cart[subIndex].$$hashKey == optionID){
+        angular.forEach(Auth.setCart(),function(value,index){
+            if(Auth.setCart()[index].packageID===packageID){ 
+                angular.forEach(Auth.setCart()[index].cart,function(subValue,subIndex){
+                    if (Auth.setCart()[index].cart[subIndex].$$hashKey == optionID){
                         if(action=='edit'){
-                            var cartData = {id:packageID, desc:Auth.setCart().cart[index].packageDesc, cart:Auth.setCart().cart[index].cart[subIndex]};
+                            var cartData = {id:packageID, desc:Auth.setCart()[index].packageDesc, cart:Auth.setCart()[index].cart[subIndex]};
                              $scope.openOrder('','',cartData);
                         }
                         if(action=='delete'){
                              //delete items   
-                             Auth.setCart().cart[index].cart.splice(subIndex, 1);
+                             Auth.setCart()[index].cart.splice(subIndex, 1);
                              //delete package if last item
-                             if (Auth.setCart().cart[index].cart.length<1){
-                                Auth.setCart().cart.splice(index, 1);
+                             if (Auth.setCart()[index].cart.length<1){
+                                Auth.setCart().splice(index, 1);
                              }
                         } 
                     }
@@ -418,7 +416,7 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
  * 
  * 
  */
-app.controller("cartController", function($scope, $location, dataFactory, $localStorage) {
+app.controller("cartController", function($scope, $location, dataFactory, Auth, $localStorage) {
     $scope.total = function() {
         var total = 0;
         angular.forEach($scope.invoice.items, function(item) {
@@ -428,7 +426,6 @@ app.controller("cartController", function($scope, $location, dataFactory, $local
     }
 
     $scope.startCheckout = function(totalTotal, cartData, userID) {
-        
         var cartInfo = {total:totalTotal, cartData:cartData, userID:userID};
         initiateCheckout(cartInfo);
     }
@@ -449,10 +446,12 @@ app.controller("cartController", function($scope, $location, dataFactory, $local
      //Listener to clear cart
    $scope.$on('clearCart', function(event, data) {
         $scope.cartObjects = [];
-        delete $localStorage.cart;
+
+        //empty cart
+        angular.forEach(Auth.setCart(),function(value,index){
+            Auth.setCart().splice(index, 1);
+        });
     });
-
-
 });
 
 
