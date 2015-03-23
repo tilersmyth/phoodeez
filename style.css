@@ -373,7 +373,7 @@ h1.phoodeez_funnel a span{
   padding: 6px 8px;
 }
 
-.create_email_form, .create_pw2_form{
+.create_email_form, .create_pw2_form, .create_co_form{
   margin-top: 20px;
 }
 
@@ -614,3 +614,70 @@ p.package-options-desc{
 
   }
 
+
+/* accountPage
+-------------------------------------------------- */
+.accountPage{
+  margin-top: 50px;
+  position: relative;
+}
+
+.accountSidebar, .accountMain{
+    background-color: #ecf0f1;
+    padding: 20px;
+}
+
+.accountSidebar_header{
+  text-align: center;
+  font-weight: bold;
+  margin-top: 0;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e7e7e7;
+}
+
+ul.accountSidebar_links{
+  padding:0;
+}
+
+ul.accountSidebar_links li{
+  list-style: none;
+}
+
+ul.accountSidebar_links li a{
+  display: block;
+  padding: 15px 20px;
+  font-size: 16px;
+  margin: 5px 0;
+  color: #a43a32;
+}
+
+ul.accountSidebar_links li a.active{
+  background:#e7e7e7;
+}
+
+ul.accountSidebar_links li a:hover{
+  background:#e7e7e7;
+  text-decoration: none;
+}
+
+ul.accountSidebar_links li a:focus{
+  text-decoration: none;
+}
+
+.accountMain_header{
+  margin-top: 0;
+  color: #a43a32;
+}
+
+.accountProfile_widget{
+  border-bottom: 1px solid #e7e7e7;
+  position: relative;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+.accountProfile_widget .account_action{
+  position: absolute;
+  right:30px;
+  bottom: 10px;
+}

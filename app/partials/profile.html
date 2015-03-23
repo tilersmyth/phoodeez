@@ -1,0 +1,57 @@
+<div class="row accountPage">
+    <div class="col-sm-3 col-sm-offset-1 accountSidebar">
+        <h3 class="accountSidebar_header">Your Account</h3>
+        <ul class="accountSidebar_links">
+            <li><a ui-sref="profile" class="active">Profile</a></li>
+            <li><a ui-sref="history">Order History</a></li>
+            <li><a ui-sref="payments">Payments</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-6 col-sm-offset-1 accountMain">
+            <div class="accountProfile_widget">
+                <div class="userDetails"> 
+                    <h4 class="accountMain_header">Name</h4>
+                    <span ng-hide="updateName">{{userData.name.user_fn[0]}} {{userData.name.user_ln[0]}}</span>
+
+                    <div class="form-inline" ng-show="updateName">
+                     <div class="form-group">
+                        <input type="text" class="form-control" ng-model="userData.name.user_fn[0]" placeholder="First Name" value="{{userData.name.user_fn[0]}}">
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" ng-model="userData.name.user_ln[0]" placeholder="Last Name" value="{{userData.name.user_ln[0]}}">
+                     </div>
+                     </div>
+                </div>
+                <div class="account_action">
+                    <a href="#" ng-click="updateName = true" ng-hide="updateName">Edit</a>
+                    <a href="#" ng-click="updateProfile(userData.ID, userData.name, 'name')" ng-show="updateName">Update</a>
+                    <span ng-show="updateName"> | </span>
+                    <a href="#" ng-click="updateName = false" ng-show="updateName">Cancel</a>
+                </div>
+            </div><!-- .accountProfile_widget -->
+            <div class="accountProfile_widget">
+                <div class="userDetails"> 
+                    <h4 class="accountMain_header">E-mail Address</h4>
+                    <span ng-hide="updateEmail">{{userData.username.email}}</span>
+                    <div class="form-inline" ng-show="updateEmail">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email Address" value="{{userData.username.email}}">
+                      </div>
+                    </div>
+                </div>
+                <div class="account_action">
+                    <a href="#" ng-click="updateEmail = true" ng-hide="updateEmail">Edit</a>
+                    <a href="#" ng-click="updateEmail = false" ng-show="updateEmail">Update</a>
+                    <span ng-show="updateEmail"> | </span>
+                    <a href="#" ng-click="updateEmail = false" ng-show="updateEmail">Cancel</a>
+                </div>    
+            </div><!-- .accountProfile_widget -->
+            <div class="accountProfile_widget">
+                <div class="userDetails"> 
+                    <h4 class="accountMain_header">Password</h4>
+                    <a href="#">Change Password</a>
+                </div>
+            </div><!-- .accountProfile_widget -->
+            <img class="pade-loader" ng-src="{{rootPath}}img/page_loader_inverse.svg" ng-show="pageLoad">
+    </div>
+</div><!-- .row -->

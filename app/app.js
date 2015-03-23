@@ -60,6 +60,48 @@
             }
 
         })
+    .state('profile', {
+            url: "/account/profile",
+            views:{
+                'viewContent': {
+                    templateUrl: myLocalized.partials + "profile.html",
+                    controller : 'profileController'
+                },
+                'viewCart': {
+                    templateUrl: myLocalized.partials + "cart.html",
+                    controller : 'cartController'
+                }
+            }
+
+        })
+    .state('history', {
+            url: "/account/history",
+            views:{
+                'viewContent': {
+                    templateUrl: myLocalized.partials + "history.html",
+                    controller : 'historyController'
+                },
+                'viewCart': {
+                    templateUrl: myLocalized.partials + "cart.html",
+                    controller : 'cartController'
+                }
+            }
+
+        })
+    .state('payments', {
+            url: "/account/payments",
+            views:{
+                'viewContent': {
+                    templateUrl: myLocalized.partials + "payments.html",
+                    controller : 'paymentsController'
+                },
+                'viewCart': {
+                    templateUrl: myLocalized.partials + "cart.html",
+                    controller : 'cartController'
+                }
+            }
+
+        })
     .state('services', {
             url: "/services",
             templateUrl: myLocalized.partials + "services.html"

@@ -38,6 +38,7 @@ if($method == 'login'){
 if($method == 'signup'){ 
       $firstName = $_GET["firstName"];
       $lastName = $_GET["lastName"];
+      $company = $_GET["company"];
       $eMail = $_GET["eMail"];
       $passWord = $_GET["passWord"];
 
@@ -48,7 +49,7 @@ if($method == 'signup'){
         $user->set_role( 'author' );
         update_user_meta( $wp_user_id, 'first_name', $firstName ); 
         update_user_meta( $wp_user_id, 'last_name', $lastName );
-
+        update_user_meta( $wp_user_id, 'billing_company', $company );
 
         echo json_encode(array('status'=>true, 'id'=>$wp_user_id, 'first_name'=>$firstName, 'last_name'=>$lastName, 'user_email'=>$eMail));
 

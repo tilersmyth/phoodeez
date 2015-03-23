@@ -60,7 +60,7 @@ if($method == 'initiate'){
               wc_add_order_item_meta( $item_id, '_line_total', wc_format_decimal( $itemData->itemPrice*$itemData->itemQty ) );
               wc_add_order_item_meta( $item_id, '_line_tax', wc_format_decimal( 0 ) );
               wc_add_order_item_meta( $item_id, '_line_subtotal_tax', wc_format_decimal( 0 ) );
-
+              wc_add_order_item_meta( $item_id, '_item_note', $itemData->itemNotes );
             }
 
 
@@ -81,7 +81,7 @@ if($method == 'complete'){
 
   if($checkoutAction == 'confirm'){
 
-    
+
     $update_checkout = array(
         'ID'           => $cartID,
         'post_status' => 'wc-completed'

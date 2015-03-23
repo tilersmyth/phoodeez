@@ -54,9 +54,9 @@
                     <span ng-cloak>{{loggedIn.first_name}} {{loggedIn.last_name}} <span class="caret"></span></span>
               </a>
               <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Order History</a></li>
-                    <li><a href="#">Payments</a></li>
+                    <li><a ui-sref="profile">Profile</a></li>
+                    <li><a ui-sref="history">Order History</a></li>
+                    <li><a ui-sref="payments">Payments</a></li>
                     <li><a href="#" ng-click="logout();">Logout</a></li>
               </ul> 
 

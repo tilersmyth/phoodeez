@@ -9,8 +9,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/server/be_connect.php?method=login&username='+un+'&password='+pw+'&tid='+nonce);
     };
 
-    dataFactory.userSignup = function (fn, ln, em, pw, nonce) {
-        return $http.get(urlBase+'/server/be_connect.php?method=signup&firstName='+fn+'&lastName='+ln+'&eMail='+em+'&passWord='+pw+'&tid='+nonce);
+    dataFactory.userSignup = function (fn, ln, co, em, pw, nonce) {
+        return $http.get(urlBase+'/server/be_connect.php?method=signup&firstName='+fn+'&lastName='+ln+'&company='+co+'&eMail='+em+'&passWord='+pw+'&tid='+nonce);
     };
 
     dataFactory.getCategories= function () {
@@ -35,6 +35,14 @@ app.factory('dataFactory', ['$http', function($http) {
 
     dataFactory.completeCheckout = function (cartData, action) {
         return $http.post(urlBase+'/server/checkout_connect.php?method=complete&cartID='+cartData+'&action='+action);
+    };
+
+    dataFactory.getProfile = function (userID) {
+        return $http.get(urlBase+'/server/be_account.php?method=profile&userID='+userID);
+    };
+
+    dataFactory.updateProfile = function (id, data, action) {
+        return $http.post(urlBase+'/server/be_account.php?method='+action+'&userID='+id, data);
     };
 
     return dataFactory;

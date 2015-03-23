@@ -201,13 +201,13 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
         if (signup.password1 !== signup.password2) {
             $scope.signupError = "Passwords do not match."
         }else{
-        userSignup(signup.firstname, signup.lastname,signup.email, signup.password1, signup.nonce);
+        userSignup(signup.firstname, signup.lastname, signup.company, signup.email, signup.password1, signup.nonce);
         }
 
-        function userSignup(fn, ln, em, pw, nonce) {
+        function userSignup(fn, ln, co, em, pw, nonce) {
 
                 $scope.loginLoad = true;
-                dataFactory.userSignup(fn, ln, em, pw, nonce)
+                dataFactory.userSignup(fn, ln, co, em, pw, nonce)
                     .success(function (user) {                        
                        if (user.status){
                             //set session
@@ -435,7 +435,6 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
     function initiateCheckout(cartData) {
          dataFactory.initiateCheckout(cartData)
                     .success(function (cartData) {
-                        console.log(cartData);
                     $location.path( "/checkout/"+cartData );
                 })
                     .error(function (error) {
@@ -498,7 +497,78 @@ app.controller("calendarController", function($rootScope, $location, Auth) {
 });
 
 
+/**
+ * Account Profile Controller
+ * 
+ * 
+ * 
+ */
+app.controller("profileController", function($scope, $location, Auth, dataFactory) {
+    //Lil auth action
+    if(Auth.setUser() == false){
+        $location.path('/');
+    }  
 
+
+
+    getProfile(Auth.setUser().id);
+
+    function getProfile(userID) {
+        $scope.pageLoad = true;
+         dataFactory.getProfile(userID)
+                    .success(function (data) {
+                        $scope.userData = data;
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    }
+
+    $scope.updateProfile = function (userID, data, action) {
+         dataFactory.updateProfile(userID, data, action)
+                    .success(function (data) {
+                        $scope.updateName = false;
+                        console.log(data);
+
+                })
+                    .error(function (error) {
+                });
+
+    }
+   
+
+});
+
+/**
+ * Account History Controller
+ * 
+ * 
+ * 
+ */
+app.controller("historyController", function($scope, $location, Auth) {
+    //Lil auth action
+    if(Auth.setUser() == false){
+        $location.path('/');
+    }
+    console.log('history');
+
+});
+
+/**
+ * Account Payments Controller
+ * 
+ * 
+ * 
+ */
+app.controller("paymentsController", function($scope, $location, Auth) {
+    //Lil auth action
+    if(Auth.setUser() == false){
+        $location.path('/');
+    }
+
+
+});
 
 
 
