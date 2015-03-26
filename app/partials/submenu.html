@@ -5,9 +5,13 @@
     <div class="row cat_row">
         <div ng-repeat="product in products.packages">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
-                <a ui-sref="package({ funnelID: '{{catID}}', singleID: '{{product.ID}}' })">
+                <a ui-sref="package({ funnelID: '{{catID}}', singleID: '{{product.post.ID}}' })" ng-mouseover="slide=true" ng-mouseleave="slide=false">
                     <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{product.img_path}})'}">
-                    <div class="package_title">{{product.post_title}}</div>
+                    <div class="price_container"><p>starting at</p>{{product.min_price | currency}}</div>
+                    <div class="package_title" ng-show="slide">
+                        <h4>{{product.post.post_title}}</h4>
+                        <p>{{product.post.post_content}}</p>
+                    </div>
                     </div>
                 </a>
             </div>

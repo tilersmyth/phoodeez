@@ -1,4 +1,8 @@
-   <h1 class="phoodeez_funnel">Hello, what are you ordering for?</h1>
+   <h1 class="phoodeez_funnel">
+    <span ng-show="!loggedIn.first_name">Hello, what are you ordering for?</span>
+    <span ng-show="loggedIn.first_name">Hi {{loggedIn.first_name}}, what are you ordering for?</span>
+   </h1>
+
     <div class="row cat_row">
         <div ng-repeat="category in categories">
             <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">

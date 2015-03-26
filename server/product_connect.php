@@ -49,19 +49,18 @@ if($method == 'product'){
       $results = new WP_Query( $args );
       
       $packages = $results->posts;
-
+      $_pf = new WC_Product_Factory();
       $bundled_packages = array();
       foreach ($packages as $package){
          $package_meta = get_post_meta( $package->ID, '_bundle_data' );
+         $_product = $_pf->get_product($package->ID);
          $thumbnail_id = get_post_thumbnail_id( $package->ID );
          $image = wp_get_attachment_url( $thumbnail_id );
-         $package->img_path = $image;
+         $_product->img_path = $image;
          if ($package_meta){
-            $bundled_packages[] = $package;
+            $bundled_packages[] = $_product;
          }
       } 
-
-
 
       echo json_encode(array('catName' => $cat_name, 'packages' => $bundled_packages));
 
@@ -84,6 +83,9 @@ if($method == 'single'){
       $_product = $_pf->get_product($singleID);
       $thumbnail_id = get_post_thumbnail_id( $singleID );
       $image = wp_get_attachment_url( $thumbnail_id );
+
+      // $product = get_product( $singleID );
+      // $children = $product->get_children();
 
 
       echo json_encode(array('catName' => $cat_name,'package' => $_product,'package_thumb' => $image));

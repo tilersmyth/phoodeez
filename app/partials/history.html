@@ -8,7 +8,10 @@
         </ul>
     </div>
     <div class="col-sm-6 col-sm-offset-1 accountMain">
-    	<h4 class="accountMain_header">History</h4>
+    	<h4 class="accountMain_header">Order History</h4>
+        <ul ng-repeat="orders in orderHistory">
+            <li>{{orders.post_excerpt}}</li>
+        </ul>
+        <img class="pade-loader" ng-src="{{rootPath}}img/page_loader_inverse.svg" ng-show="pageLoad">
     </div>
 </div><!-- .row -->
-<img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

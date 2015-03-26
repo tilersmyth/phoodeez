@@ -31,7 +31,29 @@ if($method == 'name'){
   update_user_meta( $userID, 'first_name', $request->user_fn[0] );
   update_user_meta( $userID, 'last_name', $request->user_ln[0] );
 
-  echo json_encode($request);
+  echo json_encode(array('action' => $method, 'data' => $request));
+
+  exit;
+}
+
+if($method == 'order'){
+
+  $userID = $_GET["userID"];
+
+  $args = array(
+  'post_type' => 'shop_order',
+  'post_status' => 'wc-completed',
+  'post_author' => $userID,
+  'meta_key' => '_customer_user',
+  'posts_per_page' => '-1'
+  );
+  $my_query = new WP_Query($args);
+
+  $customer_orders = $my_query->posts;
+
+  echo json_encode(array('action' => $method, 'data' => $customer_orders));
+
+  exit;
 }
 
 ?>

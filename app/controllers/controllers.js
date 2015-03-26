@@ -317,6 +317,7 @@ app.controller("catController", function($scope, $stateParams, dataFactory) {
 
     
     $scope.catID = $stateParams.funnelID; 
+    $scope.slide = false;
 
     getProducts($scope.catID);
 
@@ -325,6 +326,7 @@ app.controller("catController", function($scope, $stateParams, dataFactory) {
          dataFactory.getProducts(catID)
                     .success(function (products) {
                     $scope.products = products;
+                    console.log($scope.products);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -354,6 +356,7 @@ app.controller("singleController", function($scope, $rootScope, $modal, $statePa
          dataFactory.getSingle(catID, singleID)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
+                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -529,7 +532,11 @@ app.controller("profileController", function($scope, $location, Auth, dataFactor
          dataFactory.updateProfile(userID, data, action)
                     .success(function (data) {
                         $scope.updateName = false;
-                        console.log(data);
+                        
+                        if(data.action =='name'){
+                        Auth.setUser().first_name = data.data.user_fn[0];
+                        Auth.setUser().last_name = data.data.user_ln[0];
+                        }
 
                 })
                     .error(function (error) {
@@ -546,12 +553,26 @@ app.controller("profileController", function($scope, $location, Auth, dataFactor
  * 
  * 
  */
-app.controller("historyController", function($scope, $location, Auth) {
+app.controller("historyController", function($scope, $location, Auth, dataFactory) {
     //Lil auth action
     if(Auth.setUser() == false){
         $location.path('/');
     }
-    console.log('history');
+    
+    updateProfile(Auth.setUser().id, '', 'order');
+
+    function updateProfile(userID, data, action) {
+        $scope.pageLoad = true;
+         dataFactory.updateProfile(userID, data, action)
+                    .success(function (data) {
+                        
+                    $scope.orderHistory = data.data;
+                    $scope.pageLoad = false;
+                })
+                    .error(function (error) {
+                });
+
+    }
 
 });
 

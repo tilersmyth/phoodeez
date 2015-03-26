@@ -287,14 +287,97 @@ h1.phoodeez_funnel a span{
   border-color: #a43a32 !important;
 }
 
+.price_container{
+  background: rgba(0, 0, 0, .8);
+  position: absolute;
+  top: 0;
+  right:0;
+  padding: 5px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  text-align: right;
+}
+
+.price_container p{
+  font-size: 10px;
+  text-transform: uppercase;
+  margin:0;
+  color:#999999;
+}
+
 .package_title{
-  background: rgba(0, 0, 0, .7);
+  background: rgba(0, 0, 0, .8);
   position: absolute; 
-  bottom:0;
+  text-align:center;
   left: 0;
   width: 100%;
-  text-align:center;
-  padding:20px 0;
+  height:100%;
+  top: 0;
+  -webkit-transform: translate3d(0,0,0); /* Chrome, Safari, Opera */
+  transform: translate3d(0,0,0,);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  border-radius: 4px;
+}
+
+.package_title.ng-hide-add,
+.package_title.ng-hide-remove {
+  display:block!important;
+}
+
+.package_title.ng-hide-remove.ng-hide-remove-active {
+  -webkit-animation:0.5s slide-up;
+  animation:0.5s slide-up;
+}
+
+.package_title.ng-hide-add.ng-hide-add-active {
+  -webkit-animation:1s slide-down;
+  animation:1.5s slide-down;
+}
+
+.package_title.ng-hide {
+  top:75%;
+  display:block!important;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slide-up
+{
+  0%   {top:75%;}
+  100%  {top:0;}
+}
+
+/* Standard syntax */
+@keyframes slide-up
+{
+  0%   {top:75%;}
+  100%  {top:0;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes slide-down
+{
+  0%  {top:0;}
+  100%   {top:75%;}
+}
+
+/* Standard syntax */
+@keyframes slide-down
+{
+  0%  {top:0;}
+  100%   {top:75%;}
+}
+
+.package_title h4{
+  font-size: 14px;
+  margin-top:17px;
+  margin-bottom: 15px;
+}
+
+.package_title p{
+  font-size: 12px;
 }
 
 .pade-loader{
