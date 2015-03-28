@@ -234,7 +234,7 @@ h1.phoodeez_funnel a span{
 }
 
 .cat_row{
-  margin-top: 80px;
+  margin-top: 50px;
 
 }
 
@@ -254,7 +254,8 @@ h1.phoodeez_funnel a span{
 }
 
 .option_item{
-  min-width:215px!important
+  min-width:215px!important;
+  margin-bottom: 20px;
 }
 
 .option-thumb{
@@ -320,6 +321,7 @@ h1.phoodeez_funnel a span{
   -webkit-perspective: 1000;
   perspective: 1000;
   border-radius: 4px;
+  padding: 0 20px;
 }
 
 .package_title.ng-hide-add,
@@ -378,6 +380,7 @@ h1.phoodeez_funnel a span{
 
 .package_title p{
   font-size: 12px;
+  height: 55%
 }
 
 .pade-loader{
@@ -386,6 +389,14 @@ h1.phoodeez_funnel a span{
   top: 0; left: 0; bottom: 0; right: 0
 }
 
+.package_dietary ul{  
+  margin: 0;
+  font-size: 12px;
+}
+
+.container-test{
+    margin-left: 8.33333333%
+}
 
 /*Phoodeez styled modal
 -------------------------------------------------- */

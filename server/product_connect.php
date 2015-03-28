@@ -51,6 +51,8 @@ if($method == 'product'){
       $packages = $results->posts;
       $_pf = new WC_Product_Factory();
       $bundled_packages = array();
+      
+
       foreach ($packages as $package){
          $package_meta = get_post_meta( $package->ID, '_bundle_data' );
          $_product = $_pf->get_product($package->ID);
@@ -58,7 +60,15 @@ if($method == 'product'){
          $image = wp_get_attachment_url( $thumbnail_id );
          $_product->img_path = $image;
          if ($package_meta){
+            $dietary = array();
             $bundled_packages[] = $_product;
+            foreach ($_product->bundle_data as $poppycock){
+              $optionID = $poppycock['product_id'];  
+              $dietary[] = get_post_meta( $optionID , 'dietary' )[0];
+            }
+           $hey = implode(',', $dietary);
+           $unique = explode(',', $hey);
+           $_product->dietz = array_unique($unique);
          }
       } 
 

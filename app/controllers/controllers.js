@@ -6,7 +6,7 @@
  * 
  */
 
-app.controller("ApplicationController", function($scope, $modal, $http, $localStorage, Auth) {
+app.controller("ApplicationController", function($scope, $location, $modal, $http, $localStorage, Auth) {
 
     //set the root path
     $scope.rootPath = myLocalized.root;
@@ -27,6 +27,7 @@ app.controller("ApplicationController", function($scope, $modal, $http, $localSt
     $scope.logout = function() {
         delete $localStorage.x;
         $scope.$emit('userOn', false);
+        $location.path('/');
     };
 
 

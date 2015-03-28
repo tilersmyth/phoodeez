@@ -2,19 +2,24 @@
  		<a ui-sref="home"><span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span></a> 
  		<span ng-show="products.catName">Recommendations for {{products.catName}}</span>
     </h1>
-    <div class="row cat_row">
-        <div ng-repeat="product in products.packages">
-            <div class="col-sm-2 option_item" ng-class="{'col-sm-offset-1': $first}">
-                <a ui-sref="package({ funnelID: '{{catID}}', singleID: '{{product.post.ID}}' })" ng-mouseover="slide=true" ng-mouseleave="slide=false">
-                    <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{product.img_path}})'}">
-                    <div class="price_container"><p>starting at</p>{{product.min_price | currency}}</div>
-                    <div class="package_title" ng-show="slide">
-                        <h4>{{product.post.post_title}}</h4>
-                        <p>{{product.post.post_content}}</p>
-                    </div>
-                    </div>
-                </a>
-            </div>
-     </div><!-- ng_repeat -->
-    </div><!-- .cat_row -->
+    <div class="container">
+        <div class="row cat_row">
+                <div ng-repeat="product in products.packages" class="col-sm-3 option_item">
+                    <a ui-sref="package({ funnelID: '{{catID}}', singleID: '{{product.post.ID}}' })" ng-mouseover="slide=true" ng-mouseleave="slide=false">
+                        <div class="thumbnail suboption-thumb" ng-style="{'background-image':'url({{product.img_path}})'}">
+                        <div class="price_container"><p>starting at</p>{{product.min_price | currency}}</div>
+                        <div class="package_title" ng-show="slide">
+                            <h4>{{product.post.post_title}}</h4>
+                            <p>{{product.post.post_content}}</p>
+                            <div class="package_dietary">
+                                <ul class="list-inline">
+                                    <li ng-repeat="diet in product.dietz track by $index" tooltip="gee, idk">{{diet}}</li>
+                                </ul>    
+                            </div>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+        </div><!-- .cat_row -->
+    </div>
 <img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">
