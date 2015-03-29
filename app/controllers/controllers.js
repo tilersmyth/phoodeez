@@ -259,6 +259,7 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
                     .success(function (user) {
                         if (user.status){
                             //set session
+                            console.log(user);
                             Auth.setUser(user);
                             $scope.userData = user;
 

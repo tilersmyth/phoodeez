@@ -26,15 +26,17 @@ if($method == 'login'){
        // echo $user->get_error_message();
       } 
 
-      $first_name = get_user_meta($user->ID, 'first_name');
-      $last_name = get_user_meta($user->ID, 'last_name');
-      $last_name = get_user_meta($user->ID, 'last_name');
+      $user_info = get_userdata($user->ID);
+
+      $first_name = $user_info->first_name;
+      $last_name = $user_info->last_name;
+      $user_email = $user_info->user_email;
       $company = get_user_meta($user->ID, 'billing_company');
       $address = get_user_meta($user->ID, 'shipping_address_1');
 
       $has_address = (!empty($address[0])) ? true : false;
 
-      echo json_encode(array('status'=>true, 'id'=>$user->ID, 'first_name'=>$first_name[0], 'last_name'=>$last_name[0], 'user_email'=>$user_email, 'company'=>$company[0], 'address'=>$has_address));
+      echo json_encode(array('status'=>true, 'id'=>$user->ID, 'first_name'=>$first_name, 'last_name'=>$last_name, 'user_email'=>$user_email, 'company'=>$company[0], 'address'=>$has_address));
      exit;
 } //end login
 
