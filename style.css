@@ -719,6 +719,7 @@ p.package-options-desc{
 .accountSidebar, .accountMain{
     background-color: #ecf0f1;
     padding: 20px;
+    min-height: 300px;
 }
 
 .accountSidebar_header{
@@ -774,4 +775,68 @@ ul.accountSidebar_links li a:focus{
   position: absolute;
   right:30px;
   bottom: 10px;
+}
+
+
+/* collection.html
+-------------------------------------------------- */
+.details_wrapper h3{
+  text-align: center;
+  margin: 10px;
+  padding-bottom: 20px;
+}
+
+.collection_form_section{
+  border-top: 1px solid #dddddd;
+  padding: 5px 0;
+  margin: 0 20px;
+
+}
+
+.collection_form_section .form-group{
+  margin-bottom: 20px;
+}
+
+.collection_form_section .form-group .btn-group, .collection_form_section .form-group button{
+  width: 100%;
+}
+
+.collection_form_section .form-inline .form-left{
+  text-align: left;
+  width: 50%
+}
+
+.collection_form_section .form-inline .form-right{
+  text-align: right;
+  width: 49%
+}
+
+.collection_form_section .form-inline input, .form-right label{
+  width: 95% !important;
+}
+
+.form-right label{
+  float: right;
+}
+
+.collection_form_section .form-inline{
+
+}
+
+.collection_form_section .form-inline label{
+  display: block;
+  text-align: left;
+}
+
+.collection_form_section_title{
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #cccccc;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.btn-collection{
+  width: 100%;
+  position: relative;
 }

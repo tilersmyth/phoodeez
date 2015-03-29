@@ -46,7 +46,7 @@
             </li>
 
             <li ng-show="!loggedIn">
-            	<a href="#" ng-cloak ng-click="open('login')">Sign in</a>
+            	<a href="#" ng-cloak ng-click="open('')">Sign in</a>
             </li>
 
             <li class="dropdown" ng-show="loggedIn" dropdown>

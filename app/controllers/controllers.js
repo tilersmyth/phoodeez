@@ -31,16 +31,25 @@ app.controller("ApplicationController", function($scope, $location, $modal, $htt
     };
 
 
+    //Listener for user login
+   $scope.$on('openLogin', function(event, data) {
+        $scope.open(data);
+    });
+
+
    //Open Login Modal and pass necessary vars
     $scope.open = function (modal) {
         $modal.open({
-            templateUrl: modal,
-            controller: modal+'Controller',
+            templateUrl: 'login',
+            controller: 'loginController',
             backdrop: 'static',
-            windowClass: modal,
+            windowClass: 'login',
             resolve: {
                 authObj: function () {
                   return $scope.authObj;
+                },
+                loginData: function () {
+                  return modal;
                 }
             }
        });
@@ -128,6 +137,7 @@ if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects =
     }
 
 
+
 //Cart Item Action (edit/delete)
   $scope.cartitemAction = function (packageID, optionID, action) {  
         
@@ -188,13 +198,11 @@ if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects =
  * 
  */
 
-app.controller('loginController', function ($rootScope, $scope, $modalInstance, authObj, $http, dataFactory, Auth) {
+app.controller('loginController', function ($rootScope, $scope, $modalInstance, authObj, loginData, $http, dataFactory, Auth) {
     $scope.authObj = authObj;
+    $scope.loginData = loginData;
 
     $scope.rootPath = myLocalized.root;
-
-    
-
 
     //User Sign up
     $scope.signUp = function(signup) { 
@@ -258,6 +266,13 @@ app.controller('loginController', function ($rootScope, $scope, $modalInstance, 
                             if (user !== "false"){
                                 $rootScope.$broadcast('userOn', $scope.userData);
                                 $modalInstance.dismiss('cancel');
+                            }
+
+                            //if in process of checkout
+                            if ($scope.loginData){                               
+                                var continueInfo = {total:$scope.loginData.total, address:$scope.userData.address};
+
+                                $rootScope.$broadcast('continueCheckout', continueInfo); 
                             }
 
                         }else{
@@ -327,7 +342,6 @@ app.controller("catController", function($scope, $stateParams, dataFactory) {
          dataFactory.getProducts(catID)
                     .success(function (products) {
                     $scope.products = products;
-                    console.log($scope.products);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -357,7 +371,6 @@ app.controller("singleController", function($scope, $rootScope, $modal, $statePa
          dataFactory.getSingle(catID, singleID)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
-                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -429,17 +442,33 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
         return total;
     }
 
+
+    $scope.$on('continueCheckout', function(event, data) {
+        $scope.startCheckout(data.total, Auth.setCart(), Auth.setUser().id);
+    });
+
+
     $scope.startCheckout = function(totalTotal, cartData, userID) {
-        var cartInfo = {total:totalTotal, cartData:cartData, userID:userID};
-        initiateCheckout(cartInfo);
+        
+        $scope.cartInfo = {total:totalTotal, cartData:cartData, userID:userID};
+        if(Auth.setUser() == false){
+            $scope.$emit('openLogin', $scope.cartInfo); return false;
+        }
+        var has_address = Auth.setUser().address; 
+
+        initiateCheckout($scope.cartInfo, has_address);
     }
 
 
 
-    function initiateCheckout(cartData) {
+    function initiateCheckout(cartData, hasAddress) {
          dataFactory.initiateCheckout(cartData)
                     .success(function (cartData) {
-                    $location.path( "/checkout/"+cartData );
+                        if (hasAddress){
+                            $location.path( "/checkout/"+cartData );
+                        }else{
+                            $location.path('/checkout/'+cartData+'/details');
+                        }
                 })
                     .error(function (error) {
                 });
@@ -455,6 +484,8 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
             Auth.setCart().splice(index, 1);
         });
     });
+
+
 });
 
 
@@ -468,18 +499,81 @@ app.controller("checkoutController", function($scope, $stateParams, dataFactory,
     $scope.cartID = $stateParams.cartID; 
 
     $scope.completeCheckout = function(checkout, action) {
-
-
-
          dataFactory.completeCheckout(checkout, action)
                     .success(function (checkout) {
                     $scope.checkout = checkout;
+
                     $rootScope.$broadcast('clearCart', true);
                 })
                     .error(function (error) {
                 });
 
     }
+
+});
+
+
+/**
+ * Details Controller
+ * used to get customers info before checkout
+ * 
+ * 
+ */
+app.controller("detailsController", function($scope, $rootScope, $location, $stateParams, Auth, dataFactory) {
+    //Lil auth action
+    if(Auth.setUser() == false){
+        $location.path('/');
+    }
+
+    $scope.catID = $stateParams.cartID;
+
+    $scope.information = {};
+    
+    $scope.userInfo = Auth.setUser();
+    $scope.information.ID = $scope.userInfo.id;
+    $scope.information.firstName = $scope.userInfo.first_name;
+    $scope.information.lastName = $scope.userInfo.last_name;
+    $scope.information.company = $scope.userInfo.company;
+
+
+    //get state list
+    getStates();
+    function getStates () {
+     dataFactory.getStates()
+                .success(function (data) {
+                    $scope.stateList = data;
+
+            })
+                .error(function (error) {
+            });
+    }
+    
+    //state list dropdown
+     $scope.information.selectedState = "Select State";
+     $scope.OnItemClick = function(event) {
+        $scope.information.selectedState = event;
+    }
+
+    $scope.submitCollection = function (information){
+        var config = {
+              information: information
+          };
+        updateCollection(config, 'information');
+    }
+
+    function updateCollection(data, action) {
+        $scope.pageLoad = true;
+         dataFactory.updateCollection(data, action)
+            .success(function (data) {
+                $location.path( "/checkout/"+$scope.catID );    
+                $scope.pageLoad = false;
+        })
+            .error(function (error) {
+        });
+
+    }
+
+
 
 
 });

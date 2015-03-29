@@ -60,6 +60,20 @@
             }
 
         })
+    .state('details', {
+            url: "/checkout/:cartID/details",
+            views:{
+                'viewContent': {
+                    templateUrl: myLocalized.partials + "collection.html",
+                    controller : 'detailsController'
+                },
+                'viewCart': {
+                    templateUrl: myLocalized.partials + "cart.html",
+                    controller : 'cartController'
+                }
+            }
+
+        })
     .state('profile', {
             url: "/account/profile",
             views:{

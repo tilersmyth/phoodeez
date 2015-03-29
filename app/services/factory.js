@@ -45,6 +45,14 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.post(urlBase+'/server/be_account.php?method='+action+'&userID='+id, data);
     };
 
+    dataFactory.updateCollection = function (data, action) {
+        return $http.post(urlBase+'/server/collection.php?method='+action, data);
+    };
+
+    dataFactory.getStates = function () {
+        return $http.get(urlBase+'/server/statelist.php');
+    };
+
     return dataFactory;
 }]);
 
