@@ -18,8 +18,17 @@ function my_scripts() {
 
     wp_enqueue_style( 'bootstrap-style', get_template_directory_uri() . '/css/bootstrap.min.css' );
 
+    wp_enqueue_style( 'bootstrap-datetimepicker', get_template_directory_uri() . '/css/datetimepicker.css' );
+
     wp_enqueue_style( 'main-styles', get_stylesheet_uri() );
 
+    wp_register_script(
+        'jquery',
+        'https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js',
+        array(),
+        null,
+        false
+    );
 
     wp_register_script(
         'angularjs',
@@ -38,24 +47,16 @@ function my_scripts() {
     );
 
     wp_register_script(
+        'moment',
+        get_template_directory_uri() . '/js/moment.js',
+        array(),
+        null,
+        false
+    );    
+
+    wp_register_script(
         'angularjs-sanitize',
         get_template_directory_uri() . '/js/angular-sanitize.min.js',
-        array(),
-        null,
-        false
-    );
-
-    wp_register_script(
-        'angularjs-firebase',
-        'https://cdn.firebase.com/js/client/2.1.2/firebase.js',
-        array(),
-        null,
-        false
-    );
-
-    wp_register_script(
-        'angularjs-angularfire',
-        'https://cdn.firebase.com/libs/angularfire/0.9.2/angularfire.min.js',
         array(),
         null,
         false
@@ -108,14 +109,24 @@ function my_scripts() {
         null,
         false
     );
+
+    wp_register_script(
+        'datetimepicker',
+        get_template_directory_uri() . '/js/datetimepicker.js',
+        array(),
+        null,
+        false
+    );
+    
     
     // Vendor Libs
+    wp_enqueue_script('jquery');
     wp_enqueue_script('angularjs');
+    wp_enqueue_script('moment');
     wp_enqueue_script('angularjs-animate');
-    wp_enqueue_script('angularjs-firebase');
-    wp_enqueue_script('angularjs-angularfire');
     wp_enqueue_script('angularjs-sanitize');
     wp_enqueue_script('angularjs-ngstorage');
+    wp_enqueue_script('datetimepicker`');
 
 
     // UI Libs
@@ -125,7 +136,7 @@ function my_scripts() {
     wp_enqueue_script(
         'my-scripts',
         get_template_directory_uri() . '/app/app.js',
-        array( 'angularjs', 'angularjs-firebase', 'angularjs-angularfire', 'angularjs-route', 'angularjs-bootstrap', 'angularjs-animate', 'angularjs-sanitize','angularjs-ngstorage')
+        array( 'angularjs', 'angularjs-route', 'angularjs-bootstrap', 'angularjs-animate', 'angularjs-sanitize','angularjs-ngstorage', 'datetimepicker')
     );
     wp_enqueue_script('angularjs-route');
     wp_enqueue_script('angularjs-controllers');

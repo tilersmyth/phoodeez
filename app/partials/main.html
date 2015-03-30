@@ -1,4 +1,4 @@
-   <h1 class="phoodeez_funnel">
+   <h1 class="phoodeez_funnel" ng-init="cartClose()">
     <span ng-show="!loggedIn.first_name">Hello, what are you ordering for?</span>
     <span ng-show="loggedIn.first_name">Hi {{loggedIn.first_name}}, what are you ordering for?</span>
    </h1>
@@ -13,5 +13,4 @@
             </div>
      </div><!-- ng_repeat -->
     </div><!-- .cat_row -->
-       </footer>
 <img class="pade-loader" ng-src="{{rootPath}}img/page_loader.svg" ng-show="pageLoad">

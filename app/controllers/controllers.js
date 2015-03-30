@@ -6,7 +6,7 @@
  * 
  */
 
-app.controller("ApplicationController", function($scope, $location, $modal, $http, $localStorage, Auth) {
+app.controller("ApplicationController", function($rootScope, $scope, $location, $modal, $http, $localStorage, Auth) {
 
     //set the root path
     $scope.rootPath = myLocalized.root;
@@ -26,6 +26,7 @@ app.controller("ApplicationController", function($scope, $location, $modal, $htt
     //Log out (end session)
     $scope.logout = function() {
         delete $localStorage.x;
+        $rootScope.$broadcast('clearCart', true);
         $scope.$emit('userOn', false);
         $location.path('/');
     };
@@ -59,12 +60,16 @@ app.controller("ApplicationController", function($scope, $location, $modal, $htt
     //Cart Action Start
     $scope.cartToggle = false;
     $scope.cartFctn = function (open) { 
-        if(open){
+        if(open){ 
             $scope.cartToggle = true;
         }else{
             $scope.cartToggle = $scope.cartToggle === true ? false: true;
         }
     };
+
+    $scope.cartClose = function (close) { 
+        $scope.cartToggle = false;
+    }
 
 //if cart from session
 if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects = [];}
@@ -343,6 +348,7 @@ app.controller("catController", function($scope, $stateParams, dataFactory) {
          dataFactory.getProducts(catID)
                     .success(function (products) {
                     $scope.products = products;
+                    console.log($scope.products);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -443,6 +449,11 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
         return total;
     }
 
+    $scope.status = { isopen: false };
+
+    $scope.inputOnTimeSet = function () {
+       $scope.status.isopen = !$scope.status.isopen;
+    };
 
     $scope.$on('continueCheckout', function(event, data) {
         $scope.startCheckout(data.total, Auth.setCart(), Auth.setUser().id);
@@ -498,6 +509,9 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
  */
 app.controller("checkoutController", function($scope, $stateParams, dataFactory, $rootScope) {
     $scope.cartID = $stateParams.cartID; 
+
+
+
 
     $scope.completeCheckout = function(checkout, action) {
          dataFactory.completeCheckout(checkout, action)

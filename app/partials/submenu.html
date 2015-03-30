@@ -13,7 +13,7 @@
                             <p>{{product.post.post_content}}</p>
                             <div class="package_dietary">
                                 <ul class="list-inline">
-                                    <li ng-repeat="diet in product.dietz track by $index" tooltip="gee, idk">{{diet}}</li>
+                                    <li ng-repeat="(key, data) in product.dietz" tooltip="{{data}}">{{key}}</li>
                                 </ul>    
                             </div>
                         </div>

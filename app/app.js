@@ -1,4 +1,4 @@
-	var app = angular.module("phoodeez", ["firebase",'ui.router',"ui.bootstrap", "ngAnimate", "ngSanitize","ngStorage"]);
+	var app = angular.module("phoodeez", ["ui.router","ui.bootstrap", "ngAnimate", "ngSanitize","ngStorage", "ui.bootstrap.datetimepicker"]);
 (function(){
 
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {

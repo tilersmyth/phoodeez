@@ -7,18 +7,34 @@
 					Your cart is empty.
 				</div>	
 				<div class="cart_content" ng-show="cartObjects.length > 0">
-				<div class="short_notice" ng-show="totalTotal<100">{{(100-totalTotal)|currency}} required to continue</div>
-				<div class="cart_action">
-					<div class="btn-group">
-						<button class="btn btn-danger btn-lg" ng-disabled="totalTotal<10" type="submit">Add to Calendar</button>
-					</div>
+
+				<div class="dropdown delivery-dropdown-edit" dropdown on-toggle="toggled(open)" ng-show="data.dateDropDownInputNoFormatting">
+				  <p><b>Delivery Date:</b> {{ data.dateDropDownInputNoFormatting | date:'medium' }}</p>
+			      <a href="#" class="dropdown-toggle" dropdown-toggle>Edit</a>
+			      <ul class="dropdown-menu" role="menu">
+				      <datetimepicker data-ng-model="data.dateDropDownInputNoFormatting" data-on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
+				   </ul>
+			    </div>
+
+				
+				<div class="btn-group delivery-dropdown" dropdown is-open="status.isopen" ng-hide="data.dateDropDownInputNoFormatting">
+				      <button type="button" class="btn btn-lg btn-danger dropdown-toggle" dropdown-toggle>
+				        Select Delivery Date/Time 
+				      </button>
+				      <ul class="dropdown-menu" role="menu">
+				        <datetimepicker data-ng-model="data.dateDropDownInputNoFormatting" data-on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
+				      </ul>
+				</div>
+				
+				<div class="cart_action" ng-show="data.dateDropDownInputNoFormatting">
 					<div class="btn-group">
 						<button ng-click="startCheckout((totalTotal|number:2), cartObjects, loggedIn.id)" class="btn btn-primary btn-lg" ng-disabled="totalTotal<10" type="submit">Checkout</button>
 					</div>
 				<hr>
 				</div><!-- .cart_action -->
 					<div ng-repeat="cartItem in cartObjects">
-				        Order from <b>{{cartItem.vendorName}}</b>
+				        <b>{{cartItem.vendorName}}</b>
+				        <div class="short_notice" ng-show="totalTotal<100"> - {{(100-totalTotal)|currency}} required to continue</div>
 				        <div class="row cart_container" ng-repeat="cartList in cartItem.cart">
 				        	<div class="cart_item_wrapper" ng-hide="cartitemDelete">
 				        		<div class="col-xs-9">

@@ -64,11 +64,15 @@ if($method == 'product'){
             $bundled_packages[] = $_product;
             foreach ($_product->bundle_data as $poppycock){
               $optionID = $poppycock['product_id'];  
-              $dietary[] = get_post_meta( $optionID , 'dietary' )[0];
+                $tags = get_the_terms($optionID , 'product_tag' );
+                  if(!empty($tags)){
+                  foreach($tags as $tag){
+                      $long_name = substr($tag->name, strpos($tag->name, ":") + 1); 
+                      $short_name = substr($tag->name, 0, strpos($tag->name, ':'));
+                      $dietary[$short_name] = $long_name;
+                  }}
             }
-           $hey = implode(',', $dietary);
-           $unique = explode(',', $hey);
-           $_product->dietz = array_unique($unique);
+           $_product->dietz = array_unique($dietary);
          }
       } 
 

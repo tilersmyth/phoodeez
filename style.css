@@ -206,11 +206,28 @@ a.phoodeez-brand p{
 }
 
 .short_notice{
-  text-align: center;
+  display: inline-block;
   text-transform: uppercase;
   font-size: 12px;
   color: #777;
   margin-bottom: 5px;
+}
+
+.delivery-dropdown, .cart_action .btn-group{
+  width: 100%
+}
+
+.delivery-dropdown button, .cart_action button{
+  margin:0 0 20px 0;
+  width: 100%;
+}
+
+.delivery-dropdown-edit{
+  text-align: center;
+}
+
+.delivery-dropdown-edit p, .delivery-dropdown-edit a{
+  display: inline-block;
 }
 
 /*Main Content
