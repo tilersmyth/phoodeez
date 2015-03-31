@@ -7,9 +7,9 @@ $method = $_GET["method"];
 
 //Get main categories
 if($method == 'category'){ 
-      
-      $taxonomy = 'product_cat';
-      $tax_terms = get_terms($taxonomy);
+      $args = array('parent' => 24); 
+      $tax_terms = get_terms('product_cat', $args);
+
       foreach ($tax_terms as $tax_term){
 
         
@@ -98,11 +98,40 @@ if($method == 'single'){
       $thumbnail_id = get_post_thumbnail_id( $singleID );
       $image = wp_get_attachment_url( $thumbnail_id );
 
+
+      //3. Get Vendor Add-ons
+
+      $author = $_product->post->post_author;
+      $args = array(
+          'author' => $author,
+          'post_type'             => 'product',
+          'post_status'           => 'publish',
+          'ignore_sticky_posts'   => 1,
+          'tax_query'             => array(
+              array(
+                  'taxonomy'      => 'product_cat',
+                  'field' => 'term_id',
+                  'terms'         => '25',
+                  'operator'      => 'IN'
+              )
+          )
+      );
+      $query = new WP_Query($args);
+
+      $query->posts;
+      $addOns = array();
+      foreach ($query as $addOn){
+        if(!empty($addOn->ID)){
+         $addOns[] = $_pf->get_product($addOn->ID);
+        }
+      } 
+
+
       // $product = get_product( $singleID );
       // $children = $product->get_children();
 
 
-      echo json_encode(array('catName' => $cat_name,'package' => $_product,'package_thumb' => $image));
+      echo json_encode(array('catName' => $cat_name,'package' => $_product,'package_thumb' => $image, 'addons'=>$addOns));
 
      exit;
 } //end Single Products

@@ -52,7 +52,7 @@ if($method == 'signup'){
 
         $wp_user_id = wp_create_user($eMail, $passWord, $eMail);
         $user = new WP_User( $wp_user_id );
-        $user->set_role( 'author' );
+        $user->set_role( 'customer' );
         update_user_meta( $wp_user_id, 'first_name', $firstName ); 
         update_user_meta( $wp_user_id, 'last_name', $lastName );
         update_user_meta( $wp_user_id, 'billing_company', $company );

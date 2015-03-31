@@ -155,3 +155,9 @@ function my_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'my_scripts' );
+
+// add restaurant feature to woo
+add_action('init', 'wpse_74054_add_author_woocommerce', 999 );
+function wpse_74054_add_author_woocommerce() {
+    add_post_type_support( 'product', 'author' );
+}

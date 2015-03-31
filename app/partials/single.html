@@ -35,6 +35,20 @@
                     </li>
     			</ul>
     		</div><!-- .package_options_list -->
+            <div class="package_options_list" ng-if="singleData.addons[0]">
+                <h3>Add-ons</h3>
+                <ul ng-repeat="addOns in singleData.addons"> 
+                    <li>
+                        <a href="#" ng-click="openOrder(package.product_id, singleData.package.id)">
+                            <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+                            <div class="single-package-info">
+                                   {{addOns.post.post_title}}
+                                <p>{{addOns.post.post_content}}</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div><!-- .package_options_list -->
     	</div><!-- .package_options_wrapper -->
     </div>
     </div><!-- .row -->

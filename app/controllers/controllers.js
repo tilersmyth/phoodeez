@@ -319,6 +319,7 @@ app.controller("mainController", function($scope, dataFactory) {
          dataFactory.getCategories()
                     .success(function (cats) {
                     $scope.categories = cats;
+                    console.log($scope.categories);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
