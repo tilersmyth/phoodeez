@@ -176,6 +176,7 @@ if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects =
 
   //Open Order Modal and pass necessary vars
     $scope.openOrder = function (optionID, packageID, editCart) {  
+        console.log(optionID+' '+packageID+' '+editCart);
         $modal.open({
             templateUrl: "package_order",
             backdrop: 'static',
@@ -379,6 +380,7 @@ app.controller("singleController", function($scope, $rootScope, $modal, $statePa
          dataFactory.getSingle(catID, singleID)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
+                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {

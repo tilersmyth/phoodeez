@@ -699,6 +699,29 @@ p.package-options-desc{
   font-size: 20px;
  }
 
+ .row-addOns{
+  padding: 10px 20px;
+ }
+
+ .inner-row-addOns{
+  margin-bottom: 10px;
+ }
+
+ .inner-row-addOns a{
+  border-bottom: 1px solid #ccc;
+ } 
+
+ .a-row-addOns{
+  position: relative;
+ }
+
+ .addOn-price{
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #999999;
+ }
+
  /*Checkout Page
 -------------------------------------------------- */
 .checkout_wrapper{

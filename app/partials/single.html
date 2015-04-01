@@ -37,17 +37,23 @@
     		</div><!-- .package_options_list -->
             <div class="package_options_list" ng-if="singleData.addons[0]">
                 <h3>Add-ons</h3>
-                <ul ng-repeat="addOns in singleData.addons"> 
-                    <li>
-                        <a href="#" ng-click="openOrder(package.product_id, singleData.package.id)">
+
+
+                <div class="row row-addOns">
+                    <div class="col-md-6 inner-row-addOns" ng-repeat-start="item in singleData.addons">
+                        <a href="#" class="a-row-addOns" ng-click="openOrder(item.id, singleData.package.id)">
                             <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
+                            <div class="addOn-price">{{item.price[0] | currency}}</div>
                             <div class="single-package-info">
-                                   {{addOns.post.post_title}}
-                                <p>{{addOns.post.post_content}}</p>
+                                   {{item.post.post_title}}
+                                <p>{{item.post.post_content}}</p>
                             </div>
                         </a>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="clearfix" ng-if="$index%3==2"></div>
+                    <div ng-repeat-end=""></div>
+                </div>
+
             </div><!-- .package_options_list -->
     	</div><!-- .package_options_wrapper -->
     </div>

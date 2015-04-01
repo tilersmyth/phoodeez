@@ -120,16 +120,12 @@ if($method == 'single'){
 
       $query->posts;
       $addOns = array();
-      foreach ($query as $addOn){
-        if(!empty($addOn->ID)){
-         $addOns[] = $_pf->get_product($addOn->ID);
-        }
+      foreach ($query->posts as $addOn){
+         $price = get_post_meta( $addOn->ID, '_regular_price');
+         $option = $_pf->get_product($addOn->ID);
+         $option->price = $price;
+         $addOns[] = $option;
       } 
-
-
-      // $product = get_product( $singleID );
-      // $children = $product->get_children();
-
 
       echo json_encode(array('catName' => $cat_name,'package' => $_product,'package_thumb' => $image, 'addons'=>$addOns));
 
