@@ -176,7 +176,6 @@ if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects =
 
   //Open Order Modal and pass necessary vars
     $scope.openOrder = function (optionID, packageID, editCart) {  
-        console.log(optionID+' '+packageID+' '+editCart);
         $modal.open({
             templateUrl: "package_order",
             backdrop: 'static',
@@ -380,7 +379,6 @@ app.controller("singleController", function($scope, $rootScope, $modal, $statePa
          dataFactory.getSingle(catID, singleID)
                     .success(function (singleID) {
                     $scope.singleData = singleID;
-                    console.log($scope.singleData);
                     $scope.pageLoad = false;
                 })
                     .error(function (error) {
@@ -401,13 +399,15 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
     $scope.packageData = packageData;
     $scope.cartAction = cartAction;
 
-    if (!cartAction)
-    getOption($scope.singleData, $scope.packageData);
-
-    function getOption(singleData, packageData) {
+    if (cartAction !== 'edit')
+    getOption($scope.singleData, $scope.packageData, $scope.cartAction);
+    
+    function getOption(singleData, packageData, action) {
         $scope.pageLoad = true;
-         dataFactory.getOption(singleData, packageData)
+         dataFactory.getOption(singleData, packageData, action)
                     .success(function (singleID) {
+
+                    console.log(singleID);
                     $scope.singleData = singleID;
                     $scope.pageLoad = false;
                 })
@@ -603,11 +603,73 @@ app.controller("detailsController", function($scope, $rootScope, $location, $sta
  * 
  * 
  */
-app.controller("calendarController", function($rootScope, $location, Auth) {
+app.controller("calendarController", function($scope, $rootScope, $location, Auth, $modal, moment, dataFactory) {
     //Lil auth action
     if(Auth.setUser() == false){
         $location.path('/');
     }
+
+    $scope.calendarView = 'month';
+    $scope.calendarDay = new Date();
+    
+    getcalOrders(Auth.setUser().id);
+    function getcalOrders (userID) {
+         //$scope.pageLoad = true;
+         dataFactory.getcalOrders(userID)
+            .success(function (data) {
+                //console.log(data.data);   
+                //$scope.pageLoad = false;
+
+                $scope.events = [];
+
+                angular.forEach(data.data, function(value, key) {
+                      $scope.events.push({
+                        title: value.customer_message,
+                        type: 'info',
+                        starts_at: new Date(value.order_date*1000),
+                        ends_at: new Date(value.order_date*1000)
+                    });
+                });
+
+        })
+            .error(function (error) {
+        });
+    }
+
+    function showModal(action, event) {
+      $modal.open({
+        templateUrl: 'modalContent.html',
+        controller: function($scope, $modalInstance) {
+          $scope.$modalInstance = $modalInstance;
+          $scope.action = action;
+          $scope.event = event;
+        }
+      });
+    }
+
+    $scope.eventClicked = function(event) {
+      showModal('Clicked', event);
+    };
+
+    $scope.eventEdited = function(event) {
+      showModal('Edited', event);
+    };
+
+    $scope.eventDeleted = function(event) {
+      showModal('Deleted', event);
+    };
+
+    $scope.setCalendarToToday = function() {
+      $scope.calendarDay = new Date();
+    };
+
+    $scope.toggle = function($event, field, event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      event[field] = !event[field];
+    };
+
 
 
 });

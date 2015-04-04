@@ -41,7 +41,7 @@
 
                 <div class="row row-addOns">
                     <div class="col-md-6 inner-row-addOns" ng-repeat-start="item in singleData.addons">
-                        <a href="#" class="a-row-addOns" ng-click="openOrder(item.id, singleData.package.id)">
+                        <a href="#" class="a-row-addOns" ng-click="openOrder(item.id, singleData.package.id, 'addOns')">
                             <div class="single-add-icon"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></div>
                             <div class="addOn-price">{{item.price[0] | currency}}</div>
                             <div class="single-package-info">

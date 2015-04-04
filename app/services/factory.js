@@ -25,8 +25,8 @@ app.factory('dataFactory', ['$http', function($http) {
         return $http.get(urlBase+'/server/product_connect.php?method=single&catID='+catID+'&singleID='+singleID);
     };
 
-    dataFactory.getOption = function (optionID, packageData) {
-        return $http.get(urlBase+'/server/product_connect.php?method=option&optionID='+optionID+'&packageData='+packageData);
+    dataFactory.getOption = function (optionID, packageData, action) {
+        return $http.get(urlBase+'/server/product_connect.php?method=option&optionID='+optionID+'&packageData='+packageData+'&action='+action);
     };
 
     dataFactory.initiateCheckout = function (cartData) {
@@ -51,6 +51,10 @@ app.factory('dataFactory', ['$http', function($http) {
 
     dataFactory.getStates = function () {
         return $http.get(urlBase+'/server/statelist.php');
+    };
+
+    dataFactory.getcalOrders = function (user) {
+        return $http.get(urlBase+'/server/be_calendar.php?method=pull&user='+user);
     };
 
     return dataFactory;

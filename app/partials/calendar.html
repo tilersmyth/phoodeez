@@ -1,1 +1,62 @@
-<div style="display: block; text-align: center; position: margin-top:100px; color: white;"> CALENDAR!</div>
+<div class="col-md-8 col-md-offset-2 calendar_container" ng-if="events">
+          <h2 class="text-center">{{ calendarControl.getTitle() }}</h2>
+
+          <div class="row">
+
+            <div class="col-md-6 text-center">
+              <div class="btn-group">
+
+                <button class="btn btn-primary" ng-click="calendarControl.prev()">Previous</button>
+                <button class="btn btn-default" ng-click="setCalendarToToday()">Today</button>
+                <button class="btn btn-primary" ng-click="calendarControl.next()">Next</button>
+              </div>
+            </div>
+
+            <br class="visible-xs visible-sm">
+
+            <div class="col-md-6 text-center">
+              <div class="btn-group">
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'year'">Year</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'month'">Month</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'week'">Week</label>
+                <label class="btn btn-primary" ng-model="calendarView" btn-radio="'day'">Day</label>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+
+          <mwl-calendar
+            calendar-events="events"
+            calendar-view="calendarView"
+            calendar-current-day="calendarDay"
+            calendar-control="calendarControl"
+            calendar-event-click="eventClicked($event)"
+            calendar-edit-event-html="'<i class=\'glyphicon glyphicon-pencil\'></i>'"
+            calendar-delete-event-html="'<i class=\'glyphicon glyphicon-remove\'></i>'"
+            calendar-edit-event-click="eventEdited($event)"
+            calendar-delete-event-click="eventDeleted($event)"
+            calendar-auto-open="true"
+            calendar-day-view-start="06:00"
+            calendar-day-view-end="22:00"
+            calendar-timespan-click="dayClicked($date)"
+            calendar-day-view-split="30"
+            ></mwl-calendar>
+
+          <br><br><br>
+
+          <script type="text/ng-template" id="modalContent.html">
+            <div class="modal-header">
+              <h3 class="modal-title">Event action occurred!</h3>
+            </div>
+            <div class="modal-body">
+              <p>Action: <pre>{{ action }}</pre></p>
+              <p>Event: <pre>{{ event | json }}</pre></p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" ng-click="$modalInstance.close()">OK</button>
+            </div>
+          </script>
+
+        </div>

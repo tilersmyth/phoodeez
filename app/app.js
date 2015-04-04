@@ -1,4 +1,4 @@
-	var app = angular.module("phoodeez", ["ui.router","ui.bootstrap", "ngAnimate", "ngSanitize","ngStorage", "ui.bootstrap.datetimepicker"]);
+	var app = angular.module("phoodeez", ["ui.router","ui.bootstrap", "ngAnimate", "ngSanitize","ngStorage", "ui.bootstrap.datetimepicker", "mwl.calendar"]);
 (function(){
 
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -141,10 +141,11 @@
             views:{
                 'viewContent': {
                     templateUrl: myLocalized.partials + "calendar.html",
+                    controller : 'calendarController'
                 },
                 'viewCart': {
                     templateUrl: myLocalized.partials + "cart.html",
-                    controller : 'calendarController'
+                    controller : 'cartController'
                 }
             }
         });

@@ -89,7 +89,7 @@ if($method == 'single'){
       //1. Get Cat Info
       $categoryID = $_GET["catID"];
       $term = get_term_by( 'id', $categoryID, 'product_cat', 'ARRAY_A' );
-      $cat_name = $term['name'];    
+      $cat_name = $term['name'];
 
       //2. Get Package Info  
       $singleID = $_GET["singleID"];
@@ -135,14 +135,21 @@ if($method == 'single'){
 
 //Get Option
 if($method == 'option'){ 
-      
+      $prodAction = $_GET["action"];
       $optionID = $_GET["optionID"];
-      $packageData = $_GET["packageData"];
+      $packageData = $_GET["packageData"];  
       $_pf = new WC_Product_Factory();  
       $_product = $_pf->get_product($packageData);
-      $optionData = $_product->bundle_data[$optionID];
 
-      echo json_encode(array('package' => $_product,'option' => $optionData));
+      if($prodAction !== 'addOns'){
+      $optionData = $_product->bundle_data[$optionID];
+      }else{
+      $price = get_post_meta( $optionID, '_regular_price');
+      $optionData = $_pf->get_product($optionID); 
+      $optionData->price = $price;
+      }
+
+      echo json_encode(array('package' => $_product,'option' => $optionData, 'addons'=>$prodAction  ));
 
      exit;
 } //end Option

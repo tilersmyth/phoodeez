@@ -880,3 +880,12 @@ ul.accountSidebar_links li a:focus{
   width: 100%;
   position: relative;
 }
+
+/* calendar.html
+-------------------------------------------------- */
+
+.calendar_container{
+  background-color: #ecf0f1;
+  padding: 40px;
+  margin-top: 50px;
+}

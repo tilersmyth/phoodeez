@@ -20,6 +20,8 @@ function my_scripts() {
 
     wp_enqueue_style( 'bootstrap-datetimepicker', get_template_directory_uri() . '/css/datetimepicker.css' );
 
+    wp_enqueue_style( 'bootstrap-calendar', get_template_directory_uri() . '/css/angular-bootstrap-calendar.min.css' );
+
     wp_enqueue_style( 'main-styles', get_stylesheet_uri() );
 
     wp_register_script(
@@ -48,7 +50,7 @@ function my_scripts() {
 
     wp_register_script(
         'moment',
-        get_template_directory_uri() . '/js/moment.js',
+        get_template_directory_uri() . '/js/moment.min.js',
         array(),
         null,
         false
@@ -117,7 +119,87 @@ function my_scripts() {
         null,
         false
     );
+
+    wp_register_script(
+        'bootstrap-calendar',
+        get_template_directory_uri() . '/js/angular-bootstrap-calendar-tpls.js',
+        array(),
+        null,
+        false
+    );
+
+    // wp_register_script(
+    //     'calendar-mwlCalendar',
+    //     get_template_directory_uri() . '/app/directives/mwlCalendar.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-truncateEventTitle',
+    //     get_template_directory_uri() . '/app/filters/truncateEventTitle.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-calendarHelper',
+    //     get_template_directory_uri() . '/app/services/calendarHelper.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-moment',
+    //     get_template_directory_uri() . '/app/services/moment.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-mwlCollapseFallback',
+    //     get_template_directory_uri() . '/app/directives/mwlCollapseFallback.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-mwlCalendarYear',
+    //     get_template_directory_uri() . '/app/directives/mwlCalendarYear.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-mwlCalendarMonth',
+    //     get_template_directory_uri() . '/app/directives/mwlCalendarMonth.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
+    // wp_register_script(
+    //     'calendar-mwlCalendarWeek',
+    //     get_template_directory_uri() . '/app/directives/mwlCalendarWeek.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
     
+    // wp_register_script(
+    //     'calendar-mwlCalendarDay',
+    //     get_template_directory_uri() . '/app/directives/mwlCalendarDay.js',
+    //     array(),
+    //     null,
+    //     false
+    // );
+
     
     // Vendor Libs
     wp_enqueue_script('jquery');
@@ -126,22 +208,38 @@ function my_scripts() {
     wp_enqueue_script('angularjs-animate');
     wp_enqueue_script('angularjs-sanitize');
     wp_enqueue_script('angularjs-ngstorage');
-    wp_enqueue_script('datetimepicker`');
-
 
     // UI Libs
     wp_enqueue_script('angularjs-bootstrap');
+    wp_enqueue_script('datetimepicker');
+    wp_enqueue_script('bootstrap-calendar');
 
     // App Libs
     wp_enqueue_script(
         'my-scripts',
         get_template_directory_uri() . '/app/app.js',
-        array( 'angularjs', 'angularjs-route', 'angularjs-bootstrap', 'angularjs-animate', 'angularjs-sanitize','angularjs-ngstorage', 'datetimepicker')
+        array( 'angularjs', 'angularjs-route', 'angularjs-bootstrap', 'angularjs-animate', 'angularjs-sanitize','angularjs-ngstorage', 'datetimepicker','bootstrap-calendar')
     );
     wp_enqueue_script('angularjs-route');
     wp_enqueue_script('angularjs-controllers');
     wp_enqueue_script('angularjs-services');
+
+    //Calendar 
+    // wp_enqueue_script('calendar-mwlCalendar');
+    // wp_enqueue_script('calendar-truncateEventTitle');
+    // wp_enqueue_script('calendar-calendarHelper');
+    // wp_enqueue_script('calendar-moment');
+    // wp_enqueue_script('calendar-mwlCollapseFallback');
+    // wp_enqueue_script('calendar-mwlCalendarYear');
+    // wp_enqueue_script('calendar-mwlCalendarMonth');
+    // wp_enqueue_script('calendar-mwlCalendarWeek');
+    // wp_enqueue_script('calendar-mwlCalendarDay');
+
     wp_enqueue_script('angularjs-directives');
+
+
+    
+
     
     wp_localize_script(
         'my-scripts',
