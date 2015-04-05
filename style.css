@@ -886,6 +886,6 @@ ul.accountSidebar_links li a:focus{
 
 .calendar_container{
   background-color: #ecf0f1;
-  padding: 40px;
+  padding: 0 40px;
   margin-top: 50px;
 }

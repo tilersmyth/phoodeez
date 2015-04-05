@@ -56,7 +56,6 @@ app.controller("ApplicationController", function($rootScope, $scope, $location, 
        });
     }; 
 
-
     //Cart Action Start
     $scope.cartToggle = false;
     $scope.cartFctn = function (open) { 
@@ -72,13 +71,17 @@ app.controller("ApplicationController", function($rootScope, $scope, $location, 
     }
 
 //if cart from session
-if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects = [];}
+if(Auth.setCart()){
+    $scope.cartObjects = Auth.setCart()
+}else{$scope.cartObjects = [];} 
+
     $scope.$on('cartSubmitOpen', function(event, data) {
          //Step 1. cart open   
          $scope.cartFctn(data.open);
          //Step 2. fill cart (if not updating)
         if (!data.action){
         var obj = {
+            timePicker: data.timePicker,
             packageID: data.packageID,
             vendorName: data.vendorName,
             packageDesc:data.packageDesc,
@@ -106,7 +109,7 @@ if(Auth.setCart()){$scope.cartObjects = Auth.setCart()}else{$scope.cartObjects =
         }}
 
         //update cart
-        if (data.action){
+        if (data.action){ 
             angular.forEach($scope.cartObjects,function(value,index){
                 if($scope.cartObjects[index].packageID===data.packageID){ 
                     angular.forEach($scope.cartObjects[index].cart,function(subValue,subIndex){
@@ -422,8 +425,8 @@ app.controller("packageModalController", function($scope, $rootScope, $modalInst
     };
 
     //cart submit action
-    $scope.cartSubmit = function (packageID, vendorName, packageDesc, itemName, itemID, itemQty, itemPrice, itemNotes) {
-        var cartAction = { open: "openCart", packageID:packageID, vendorName: vendorName, packageDesc:packageDesc, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
+    $scope.cartSubmit = function (timePicker, packageID, vendorName, packageDesc, itemName, itemID, itemQty, itemPrice, itemNotes) {
+        var cartAction = { open: "openCart", timePicker:timePicker, packageID:packageID, vendorName: vendorName, packageDesc:packageDesc, itemName:itemName, itemID:itemID, itemQty:itemQty, itemPrice:itemPrice, itemNotes:itemNotes};
         $modalInstance.dismiss('cancel');
         $rootScope.$broadcast('cartSubmitOpen', cartAction);
     }
@@ -457,6 +460,7 @@ app.controller("cartController", function($scope, $location, dataFactory, Auth, 
     $scope.inputOnTimeSet = function () {
        $scope.status.isopen = !$scope.status.isopen;
     };
+
 
     $scope.$on('continueCheckout', function(event, data) {
         $scope.startCheckout(data.total, Auth.setCart(), Auth.setUser().id);
@@ -608,16 +612,12 @@ app.controller("calendarController", function($scope, $rootScope, $location, Aut
     if(Auth.setUser() == false){
         $location.path('/');
     }
-
-    $scope.calendarView = 'month';
-    $scope.calendarDay = new Date();
     
     getcalOrders(Auth.setUser().id);
     function getcalOrders (userID) {
          //$scope.pageLoad = true;
          dataFactory.getcalOrders(userID)
             .success(function (data) {
-                //console.log(data.data);   
                 //$scope.pageLoad = false;
 
                 $scope.events = [];
@@ -627,7 +627,7 @@ app.controller("calendarController", function($scope, $rootScope, $location, Aut
                         title: value.customer_message,
                         type: 'info',
                         starts_at: new Date(value.order_date*1000),
-                        ends_at: new Date(value.order_date*1000)
+                        ends_at: new Date((value.order_date*1000)+1800000)
                     });
                 });
 
@@ -635,6 +635,9 @@ app.controller("calendarController", function($scope, $rootScope, $location, Aut
             .error(function (error) {
         });
     }
+
+    $scope.calendarView = 'month';
+    $scope.calendarDay = new Date();
 
     function showModal(action, event) {
       $modal.open({

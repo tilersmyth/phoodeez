@@ -8,25 +8,24 @@
 				</div>	
 				<div class="cart_content" ng-show="cartObjects.length > 0">
 
-				<div class="dropdown delivery-dropdown-edit" dropdown on-toggle="toggled(open)" ng-show="data.dateDropDownInputNoFormatting">
-				  <p><b>Delivery Date:</b> {{ data.dateDropDownInputNoFormatting | date:'medium' }}</p>
+				<div class="dropdown delivery-dropdown-edit" dropdown on-toggle="toggled(open)" ng-show="cartObjects[0].timePicker">
+				  <p><b>Delivery Date:</b> {{ cartObjects[0].timePicker | date:'medium' }}</p>
 			      <a href="#" class="dropdown-toggle" dropdown-toggle>Edit</a>
 			      <ul class="dropdown-menu" role="menu">
-				      <datetimepicker data-ng-model="data.dateDropDownInputNoFormatting" data-on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
+				      <datetimepicker ng-model="cartObjects[0].timePicker" on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
 				   </ul>
 			    </div>
 
-				
-				<div class="btn-group delivery-dropdown" dropdown is-open="status.isopen" ng-hide="data.dateDropDownInputNoFormatting">
+				<div class="btn-group delivery-dropdown" dropdown is-open="status.isopen" ng-hide="cartObjects[0].timePicker">
 				      <button type="button" class="btn btn-lg btn-danger dropdown-toggle" dropdown-toggle>
 				        Select Delivery Date/Time 
 				      </button>
 				      <ul class="dropdown-menu" role="menu">
-				        <datetimepicker data-ng-model="data.dateDropDownInputNoFormatting" data-on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
+				        <datetimepicker data-ng-model="cartObjects[0].timePicker" data-on-set-time="inputOnTimeSet(newDate)"></datetimepicker>
 				      </ul>
 				</div>
 				
-				<div class="cart_action" ng-show="data.dateDropDownInputNoFormatting">
+				<div class="cart_action" ng-show="cartObjects[0].timePicker">
 					<div class="btn-group">
 						<button ng-click="startCheckout((totalTotal|number:2), cartObjects, loggedIn.id)" class="btn btn-primary btn-lg" ng-disabled="totalTotal<10" type="submit">Checkout</button>
 					</div>

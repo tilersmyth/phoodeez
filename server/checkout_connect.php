@@ -20,7 +20,7 @@ if($method == 'initiate'){
       'post_excerpt'  => $request->cartData[0]->vendorName,
       'post_author'   => 1,
       'post_password' => uniqid( 'order_' ),   // Protects the post just in case
-      'post_date'     => date('Y-m-d H:i:s e'), //'order-jun-19-2014-0648-pm'
+      'post_date'     => date('Y-m-d H:i:s e', strtotime($request->cartData[0]->timePicker)), //'order-jun-19-2014-0648-pm'
       'comment_status' => 'open'
   );
 
